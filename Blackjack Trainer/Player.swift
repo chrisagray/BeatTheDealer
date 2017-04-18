@@ -13,4 +13,5 @@ class Player
     var cards = [Card]()
     var softHand = false
     var total = 0
+    var splitHand = false
 }

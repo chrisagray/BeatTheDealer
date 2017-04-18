@@ -16,7 +16,6 @@
 		83062F2A1E845D5C00A0D120 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83062F291E845D5C00A0D120 /* Card.swift */; };
 		83062F2C1E845F9100A0D120 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83062F2B1E845F9100A0D120 /* Deck.swift */; };
 		834320FA1E9BFFB600153F12 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834320F91E9BFFB600153F12 /* Player.swift */; };
-		83BCFBEA1E9D6A180049E96D /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BCFBE91E9D6A180049E96D /* CardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +30,6 @@
 		83062F291E845D5C00A0D120 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		83062F2B1E845F9100A0D120 /* Deck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		834320F91E9BFFB600153F12 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		83BCFBE91E9D6A180049E96D /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +62,6 @@
 		83062F111E845B4D00A0D120 /* Blackjack Trainer */ = {
 			isa = PBXGroup;
 			children = (
-				83BCFBE91E9D6A180049E96D /* CardView.swift */,
 				83062F161E845B4D00A0D120 /* Main.storyboard */,
 				83062F141E845B4D00A0D120 /* BlackjackTrainerViewController.swift */,
 				832B1CAE1E8AEF0D00887A79 /* Model */,
@@ -168,7 +165,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83BCFBEA1E9D6A180049E96D /* CardView.swift in Sources */,
 				83062F2C1E845F9100A0D120 /* Deck.swift in Sources */,
 				83062F151E845B4D00A0D120 /* BlackjackTrainerViewController.swift in Sources */,
 				83062F2A1E845D5C00A0D120 /* Card.swift in Sources */,
