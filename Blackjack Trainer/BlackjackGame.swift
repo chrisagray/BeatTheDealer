@@ -26,11 +26,12 @@ class BlackjackGame
     private var gameDeck = Deck(withCards: true)
     
     var cardsOnTable = [Card]()
-    var dealerRank = 0 //change this to be dealer total I think
     var currentPlayer = Player()
     var count = 0
     var gamesPlayed = 0
     var gamesWon = 0
+    var gamblerWins = false
+    var push = false
     
     init() {
         gameDeck.shuffle()
@@ -42,6 +43,9 @@ class BlackjackGame
         gambler.softHand = false
         dealer.softHand = false
         gambler.splitHand = false
+        gamblerWins = false
+        push = false
+        
         if !cardsOnTable.isEmpty {
             clearCardsOnTable()
         }
@@ -58,19 +62,23 @@ class BlackjackGame
             switch dealer.total {
             case 17...21:
                 if gambler.total > dealer.total {
+                    gamblerWins = true
                     gamesWon += 1
                 } else if gambler.total == 21 && dealer.total == 21 { //if you get blackjack and dealer doesn't have blackjack, you win
                     if gambler.cards.count == 2 && dealer.cards.count > 2 {
                         gamesWon += 1
+                        gamblerWins = true
+                    } else {
+                        push = true
                     }
+                } else if gambler.total == dealer.total {
+                    push = true
                 }
             default: // >21
                 gamesWon += 1
+                gamblerWins = true
             }
         }
-        
-        print("Games played: \(gamesPlayed)")
-        print("Games won: \(gamesWon)")
     }
     
     func dealTopCard(to player: Player, faceUp: Bool) {
@@ -80,14 +88,11 @@ class BlackjackGame
         let topCardRankInt = getIntegerRank(rank: topCardRank)
         
         player.cards.append(topCard)
-        updatePlayerTotal(cardRank: topCardRankInt, player: player)
-        if (player.total > 21) {
-            print("BUST")
-        }
-        cardsOnTable.append(topCard)
         if faceUp {
+            updatePlayerTotal(cardRank: topCardRankInt, player: player)
             updateCount(rank: topCardRankInt)
         }
+        cardsOnTable.append(topCard)
     }
     
     func ableToSplit() -> Bool {
@@ -119,6 +124,12 @@ class BlackjackGame
         } else {
             player.total += cardRank
         }
+    }
+    
+    func flipDealerCard() {
+        let dealerFirstCardRank = getIntegerRank(rank: dealer.cards.first!.rank)
+        updateCount(rank: dealerFirstCardRank)
+        updatePlayerTotal(cardRank: dealerFirstCardRank, player: dealer)
     }
     
     func reshuffleShoe() {
@@ -164,6 +175,7 @@ class BlackjackGame
     
     func splitCards() {
         gambler.splitHand = true
+        gambler.softHand = false
         gambler.total = 0
         gamblerFirstCard = gambler.cards.first!
         gambler.cards.removeFirst() //first card is now the second card that was split
@@ -176,12 +188,6 @@ class BlackjackGame
         let gamblerFirstCardRank = getIntegerRank(rank: gambler.cards[0].rank)
         let gamblerSecondCardRank = getIntegerRank(rank: gambler.cards[1].rank)
         let dealerSecondCardRank = getIntegerRank(rank: dealer.cards[1].rank)
-        
-        print("Gambler cards:")
-        for card in gambler.cards {
-            print(card.rank)
-            print(card.suit)
-        }
         
         if gambler.cards.count == 2 {
             return correctBasicStrategyPlayForTwoCards(playerFirstRank: gamblerFirstCardRank, playerSecondRank: gamblerSecondCardRank, dealerRank: dealerSecondCardRank)
@@ -361,15 +367,5 @@ class BlackjackGame
                 return hit
             }
         }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    }    
 }
