@@ -32,10 +32,9 @@ class Deck
         }
     }
 
-    func dealTopCard() -> Card {        
+    func dealTopCard() -> Card {
         return cards.removeFirst()
     }
-    
     
     func shuffle() {
         let newDeck = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: cards) as! [Card]

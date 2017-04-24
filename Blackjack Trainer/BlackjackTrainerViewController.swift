@@ -23,6 +23,14 @@ class BlackjackTrainerViewController: UIViewController {
     private var newCardButtons = [UIButton]()
     private var cardViews = [UIView]()
     private var previousCardButton = UIButton()
+    private var topColorGradient = UIColor.clear.cgColor
+    private var bottomColorGradient = UIColor.clear.cgColor
+    
+    private var gradientColors: [CGColor] {
+        get {
+            return [topColorGradient, bottomColorGradient]
+        }
+    }
     
     private let hit = "Hit"
     private let stand = "Stand"
@@ -30,21 +38,40 @@ class BlackjackTrainerViewController: UIViewController {
     private let split = "Split"
     private let rightCardSplitDistance: CGFloat = 65
     private let leftCardSplitDistance: CGFloat = 110
+    private let labelSplitRightDistance: CGFloat = 85
+    private let labelSplitLeftDistance: CGFloat = 110
     private let cardWidth: CGFloat = 100
     private let cardHeight: CGFloat = 150
+    private let twentyOne = 21
     private var numberOfEdgeHits = 0
     private var numberOfCardsHitToPlayer = 0
     private var maxCardsToHitBeforeOverlap = 6
-    
     private var previousHandWasSplit = false
-    private var lastHand = true
     private var handIsOver = false
+    private var aces = false
     
     private let game = BlackjackGame()
+    
+    private var gamblerTotal: Int { //might get rid of this
+        get {
+            if !game.lastHand {
+                return game.gambler.splitHandTotal
+            } else {
+                return game.gambler.total
+            }
+        }
+    }
+    
+    private var gamblerHas21OrBusts: Bool {
+        get {
+            return gamblerTotal >= 21
+        }
+    }
     
     @IBOutlet private weak var gamblerTotalLabel: UILabel!
     @IBOutlet weak var dealerTotalLabel: UILabel!
     @IBOutlet var actionButtons: [UIButton]!
+    private var splitHandTotalLabel = UILabel()
     
     override func viewDidLoad() {
         newGame()
@@ -64,6 +91,10 @@ class BlackjackTrainerViewController: UIViewController {
         }
     }
     
+//    private enum GamblerAction {
+//        case hit, stand, double, split
+//    }
+    
     
     @IBAction func chooseAction(_ action: UIButton) {
         let chosenAction = action.currentTitle!
@@ -76,91 +107,109 @@ class BlackjackTrainerViewController: UIViewController {
         }
         switch chosenAction {
         case hit:
-            changeButtonState(button: actionButtons[2], enabled: false)
-            changeButtonState(button: actionButtons[3], enabled: false)
-            hitToPlayer()
-            if game.gambler.splitHand == false {
-                if game.gambler.total >= 21 {
-                    switchPlayToDealer()
-                }
-            } else {
-                if lastHand && game.gambler.total >= 21 {
-                    switchPlayToDealer()
-                } else if !lastHand && game.gambler.total >= 21 {
-                    splitHandStandsOrBusts()
-                }
-            }
+            gamblerHits()
         case stand:
-            if lastHand {
-                switchPlayToDealer()
-            } else {
-                splitHandStandsOrBusts()
-            }
+            gamblerStands()
         case double:
-            hitToPlayer()
-            if lastHand {
-                switchPlayToDealer()
-            } else {
-                splitHandStandsOrBusts()
-            }
-            
+            gamblerDoubles()
         case split:
-            previousHandWasSplit = true
-            lastHand = false
-            var aces = false
-            if game.gambler.cards.first!.rank == "ace" && game.gambler.cards.last!.rank == "ace" {
-                aces = true
-            }
-            splitCardsOnTable()
-            if aces {
-                hitToPlayer()
-                splitHandStandsOrBusts()
-                hitToPlayer()
-                switchPlayToDealer()
-            } else {
-                hitToPlayer()
-                if game.gambler.total == 21 { //make this (and all others) game.currentPlayer?
-                    splitHandStandsOrBusts()
-                }
-            }
-            
+            gamblerSplits()
         default:
             break
         }
         updateLabels()
     }
     
-    private func splitHandStandsOrBusts() {
-        lastHand = true //might want to do splitHand: true/false instead of lastHand
-        numberOfCardsHitToPlayer = 0
-        previousCardButton = gamblerCardButtons.first!
-        game.gambler.cards = [game.gamblerFirstCard]
-        game.gambler.total = 0
-        game.gambler.softHand = false
-        game.updatePlayerTotal(cardRank: game.getIntegerRank(rank: game.gamblerFirstCard.rank), player: game.gambler)
+    private func gamblerHits() {
+        changeButtonState(button: actionButtons[2], enabled: false)
+        changeButtonState(button: actionButtons[3], enabled: false)
         hitToPlayer()
-        if game.gambler.total == 21 {
+        if !game.lastHand && gamblerHas21OrBusts {
+            splitHandStandsOrBusts()
+        } else if gamblerHas21OrBusts {
             switchPlayToDealer()
         }
     }
     
-    private func updateLabels() {
-        countLabel.text = "Count: \(game.count)"
-        if !game.gambler.softHand || game.gambler.total == 21 {
-            gamblerTotalLabel.text = String(game.gambler.total)
+    private func gamblerStands() {
+        if game.lastHand {
+            switchPlayToDealer()
         } else {
-            gamblerTotalLabel.text = "Soft \(game.gambler.total)"
+            splitHandStandsOrBusts()
+        }
+    }
+    
+    private func gamblerDoubles() {
+        hitToPlayer()
+        if game.lastHand {
+            switchPlayToDealer()
+        } else {
+            splitHandStandsOrBusts()
+        }
+    }
+    
+    private func gamblerSplits() {
+        previousHandWasSplit = true
+        if game.gambler.cards.first!.rank == "ace" && game.gambler.cards.last!.rank == "ace" {
+            aces = true
+        }
+        splitCardsOnTable()
+        addSplitHandTotalLabelToView()
+        gamblerTotalLabel.center.x -= labelSplitLeftDistance
+        gamblerTotalLabel.isHidden = true
+        game.splitCards()
+        hitToPlayer()
+        if aces || gamblerHas21OrBusts {
+            splitHandStandsOrBusts()
+        }
+    }
+    
+    private func splitHandStandsOrBusts() {
+        if !actionButtons[2].isEnabled {
+            changeButtonState(button: actionButtons[2], enabled: true)
+        }
+        gamblerTotalLabel.isHidden = false
+        numberOfCardsHitToPlayer = 0
+        previousCardButton = gamblerCardButtons.first!
+        game.splitHandStandsOrBusts()
+        hitToPlayer()
+        actionButtons[2].isEnabled = true
+        if gamblerTotal == twentyOne || aces {
+            switchPlayToDealer()
+        }
+    }
+    
+    private func addSplitHandTotalLabelToView() {
+        splitHandTotalLabel.frame = gamblerTotalLabel.frame
+        splitHandTotalLabel.center.x += labelSplitRightDistance
+        splitHandTotalLabel.textColor = UIColor.white
+        splitHandTotalLabel.font = UIFont(name: splitHandTotalLabel.font.fontName, size: 26)
+        splitHandTotalLabel.textAlignment = .center
+        self.view.addSubview(splitHandTotalLabel)
+    }
+    
+    private func updateLabels() {
+        if game.count > 0 {
+            countLabel.text = "Count: +\(game.count)"
+        } else {
+            countLabel.text = "Count: \(game.count)"
         }
         
-        if !game.dealer.softHand {
-            dealerTotalLabel.text = String(game.dealer.total)
+        if !game.gambler.softHand {
+            //I don't like how I'm not using gamblerTotal here, but I think it makes sense not to
+            gamblerTotalLabel.text = String(game.gambler.total)
+            splitHandTotalLabel.text = String(game.gambler.splitHandTotal)
         } else {
-            dealerTotalLabel.text = "Soft \(game.dealer.total)"
+            gamblerTotalLabel.text = "Soft \(game.gambler.total)"
+            splitHandTotalLabel.text = "Soft \(game.gambler.splitHandTotal)"
+        }
+        if game.currentPlayer === game.dealer {
+            dealerTotalLabel.text = String(game.dealer.total)
         }
         
         if handIsOver {
             var winOrLose = String()
-            if game.gamblerWins {
+            if game.gambler.winsHand {
                 winOrLose = "You win!"
             } else if game.push {
                 winOrLose = "Push."
@@ -183,12 +232,12 @@ class BlackjackTrainerViewController: UIViewController {
         newCardFrame = CGRect(x: previousXLocation + 20, y: previousYLocation, width: cardWidth, height: cardHeight)
         
         if game.currentPlayer === game.gambler {
-            if !lastHand {
+            if !game.lastHand {
                 maxCardsToHitBeforeOverlap = 4
             }
             if numberOfCardsHitToPlayer % maxCardsToHitBeforeOverlap == 0 && numberOfCardsHitToPlayer > 0 {
                 var cardToOverlap = UIButton()
-                if lastHand {
+                if game.lastHand {
                     cardToOverlap = gamblerCardButtons.first!
                 } else {
                     cardToOverlap = gamblerCardButtons.last!
@@ -196,35 +245,36 @@ class BlackjackTrainerViewController: UIViewController {
                 newCardFrame = CGRect(x: cardToOverlap.frame.minX, y: previousYLocation, width: cardWidth, height: cardHeight)
             }
             numberOfCardsHitToPlayer += 1
-            print(numberOfCardsHitToPlayer)
         }
         
         game.dealTopCard(to: game.currentPlayer, faceUp: true)
         let newCard = game.cardsOnTable.last!
-        updateCardButtonImage(cardButton: newCardButton, card: newCard)
-        newCardButtons.append(newCardButton)
-        previousCardButton = newCardButton
+        putNewCardOnTable(card: newCard, cardButton: newCardButton, cardFrame: newCardFrame)
+    }
+    
+    private func putNewCardOnTable(card: Card, cardButton: UIButton, cardFrame: CGRect) {
+        updateCardButtonImage(cardButton: cardButton, card: card)
+        newCardButtons.append(cardButton)
+        previousCardButton = cardButton
         
         let newCardView = UIView()
         cardViews.append(newCardView)
-
-        newCardView.addSubview(newCardButton)
-        newCardButton.frame = newCardFrame
+        
+        newCardView.addSubview(cardButton)
+        cardButton.frame = cardFrame
         self.view.addSubview(newCardView)
     }
     
     private func splitCardsOnTable() {
-        let firstCard = gamblerCardButtons.first!
-        let secondCard = gamblerCardButtons.last!
-        let firstCardXLocation = firstCard.frame.minX
-        let secondCardXLocation = secondCard.frame.minX
+        let firstCardButton = gamblerCardButtons.first!
+        let secondCardButton = gamblerCardButtons.last!
+        let firstCardXLocation = firstCardButton.frame.minX
+        let secondCardXLocation = secondCardButton.frame.minX
         
-        firstCard.frame = CGRect(x: firstCardXLocation - leftCardSplitDistance, y: firstCard.frame.minY, width: cardWidth, height: cardHeight)
-        secondCard.frame = CGRect(x: secondCardXLocation + rightCardSplitDistance, y: secondCard.frame.minY, width: cardWidth, height: cardHeight)
+        firstCardButton.frame = CGRect(x: firstCardXLocation - leftCardSplitDistance, y: firstCardButton.frame.minY, width: cardWidth, height: cardHeight)
+        secondCardButton.frame = CGRect(x: secondCardXLocation + rightCardSplitDistance, y: secondCardButton.frame.minY, width: cardWidth, height: cardHeight)
         
         changeButtonState(button: actionButtons.last!, enabled: false) //player not able to re-split
-        
-        game.splitCards()
     }
     
     private func switchPlayToDealer() {
@@ -235,8 +285,8 @@ class BlackjackTrainerViewController: UIViewController {
         game.currentPlayer = game.dealer
         newCardButtons.removeAll()
         game.flipDealerCard()
-        updateCardButtonImage(cardButton: dealerCardButtons.first!, card: game.dealer.cards.first!)
-        if (game.gambler.total <= 21 && game.dealer.total < 21) {
+        updateCardButtonImage(cardButton: dealerCardButtons.last!, card: game.dealer.cards.last!)
+        if gamblerTotal <= 21 || (game.gambler.splitHand && game.gambler.splitHandTotal <= 21) {
             while game.dealer.total < 17 {
                 hitToPlayer()
             }
@@ -244,7 +294,7 @@ class BlackjackTrainerViewController: UIViewController {
         endOfGameUpdates()
     }
     
-    private func clearUIElementsOnTable() {
+    private func cleanUpTableUI() {
         if !cardViews.isEmpty {
             for cardView in cardViews {
                 cardView.removeFromSuperview()
@@ -253,35 +303,30 @@ class BlackjackTrainerViewController: UIViewController {
         if previousHandWasSplit {
             gamblerCardButtons.first!.center.x += leftCardSplitDistance
             gamblerCardButtons.last!.center.x -= rightCardSplitDistance
+            gamblerTotalLabel.center.x += labelSplitLeftDistance
+            splitHandTotalLabel.removeFromSuperview()
             previousHandWasSplit = false
-            lastHand = true
         }
         newCardButtons.removeAll()
+        correctPlayLabel.text = ""
+        dealerTotalLabel.text = ""
     }
     
     private func dealNewGameCards() {
-        handIsOver = false
-        clearUIElementsOnTable()
-        game.currentPlayer = game.gambler
-        game.newGameUpdates()
-        
-        game.dealTopCard(to: game.gambler, faceUp: true)
-        game.dealTopCard(to: game.dealer, faceUp: false)
         game.dealTopCard(to: game.gambler, faceUp: true)
         game.dealTopCard(to: game.dealer, faceUp: true)
+        game.dealTopCard(to: game.gambler, faceUp: true)
+        game.dealTopCard(to: game.dealer, faceUp: false)
         
         updateCardButtonImage(cardButton: gamblerCardButtons.first!, card: game.gambler.cards.first!)
-        dealerCardButtons.first!.setBackgroundImage(UIImage(named: "cardback"), for: .normal)
+        updateCardButtonImage(cardButton: dealerCardButtons.first!, card: game.dealer.cards.first!)
         updateCardButtonImage(cardButton: gamblerCardButtons.last!, card: game.gambler.cards.last!)
-        updateCardButtonImage(cardButton: dealerCardButtons.last!, card: game.dealer.cards.last!)
-        
-        if !game.ableToSplit() {
-            changeButtonState(button: actionButtons.last!, enabled: false)
-        }
-        
-        previousCardButton = gamblerCardButtons.last!
-        let dealerDownCardRank = game.getIntegerRank(rank: game.dealer.cards.first!.rank)
-        if game.gambler.total == 21 || game.dealer.total + dealerDownCardRank == 21 {
+        dealerCardButtons.last!.setBackgroundImage(UIImage(named: "cardback"), for: .normal)
+    }
+    
+    private func checkForBlackjack() {
+        let dealerDownCardRank = game.getIntegerRank(rank: game.dealer.cards.last!.rank)
+        if gamblerTotal == twentyOne || game.dealer.total + dealerDownCardRank == twentyOne {
             print("BLACKJACK")
             switchPlayToDealer()
         }
@@ -305,29 +350,46 @@ class BlackjackTrainerViewController: UIViewController {
     }
     
     private func configureUIDesign() {
-        let actionButtonTop = UIColor(red: 65/255, green: 67/255, blue: 68/255, alpha: 1).cgColor
-        let actionButtonBottom = UIColor(red: 35/255, green: 37/255, blue: 39/255, alpha: 1).cgColor
-        let actionButtonColors = [actionButtonTop, actionButtonBottom]
+        setColorsForGradients(topRed: 65/255, topGreen: 67/255, topBlue: 68/255, topAlpha: 1, bottomRed: 35/255, bottomGreen: 37/255, bottomBlue: 39/255, bottomAlpha: 1)
         
         for actionButton in actionButtons {
             actionButton.layer.cornerRadius = 5
-            createGradient(for: actionButton, with: actionButtonColors)
+            createGradient(button: actionButton, colors: gradientColors, radius: 5)
         }
-        let dealButtonTop = UIColor(red: 255/255, green: 0/255, blue: 132/255, alpha: 1).cgColor
-        let dealButtonBottom = UIColor(red: 51/255, green: 0/255, blue: 27/255, alpha: 1).cgColor
-        let dealButtonColors = [dealButtonTop, dealButtonBottom]
-        createGradient(for: dealButton, with: dealButtonColors)
-        dealButton.layer.cornerRadius = 5
+        setColorsForGradients(topRed: 255/255, topGreen: 0, topBlue: 132/255, topAlpha: 1, bottomRed: 51/255, bottomGreen: 0, bottomBlue: 27/255, bottomAlpha: 1)
+        createGradient(button: dealButton, colors: gradientColors, radius: 5)
         
-        dealerTitleLabel.layer.cornerRadius = 5
-        playerTitleLabel.layer.cornerRadius = 5
+//        setColorsForGradients(topRed: 255/255, topGreen: 237/255, topBlue: 188/255, topAlpha: 1, bottomRed: 237/255, bottomGreen: 66/255, bottomBlue: 100/255, bottomAlpha: 1)
+        
+        createGradient(label: dealerTitleLabel, colors: gradientColors, radius: 5)
+        createGradient(label: playerTitleLabel, colors: gradientColors, radius: 5)
     }
     
-    func createGradient(for button: UIButton, with colors: [CGColor]) {
-        let newGradient = CAGradientLayer()
-        newGradient.colors = colors
-        newGradient.frame = button.bounds
-        button.layer.insertSublayer(newGradient, at: 0)
+    private func setColorsForGradients(topRed: CGFloat, topGreen: CGFloat, topBlue: CGFloat, topAlpha: CGFloat, bottomRed: CGFloat, bottomGreen: CGFloat, bottomBlue: CGFloat, bottomAlpha: CGFloat) {
+        topColorGradient = UIColor(red: topRed, green: topGreen, blue: topBlue, alpha: topAlpha).cgColor
+        bottomColorGradient = UIColor(red: bottomRed, green: bottomGreen, blue: bottomBlue, alpha: bottomAlpha).cgColor
+    }
+    
+    func createGradient(button: UIButton, colors: [CGColor], radius: CGFloat) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = button.bounds
+        gradientLayer.colors = colors
+        gradientLayer.cornerRadius = radius
+        button.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    func createGradient(label: UILabel, colors: [CGColor], radius: CGFloat) {
+        
+        let gradientView = UIView()
+        gradientView.frame = label.frame
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = gradientView.bounds
+        gradientLayer.colors = colors
+        gradientLayer.cornerRadius = radius
+        
+        gradientView.layer.addSublayer(gradientLayer)
+        self.view.insertSubview(gradientView, at: 0)
     }
     
     
@@ -338,18 +400,28 @@ class BlackjackTrainerViewController: UIViewController {
     func endOfGameUpdates() {
         game.countGamesPlayedAndWon()
         handIsOver = true
+        aces = false
         numberOfCardsHitToPlayer = 0
         maxCardsToHitBeforeOverlap = 6
         changeButtonState(button: dealButton, enabled: true)
     }
     
     func newGame() {
+        handIsOver = false
+        cleanUpTableUI()
+        game.newGameUpdates()
+//        changeButtonState(button: dealButton, enabled: false)
+        
         for actionButton in actionButtons { //is there a better way to do this?
             changeButtonState(button: actionButton, enabled: true)
         }
-        changeButtonState(button: dealButton, enabled: false)
-        correctPlayLabel.text = ""
+        
         dealNewGameCards()
+        if !game.gamblerCanSplit() {
+            changeButtonState(button: actionButtons.last!, enabled: false)
+        }
+        previousCardButton = gamblerCardButtons.last!
+        checkForBlackjack()
         updateLabels()
     }
     

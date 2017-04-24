@@ -11,7 +11,10 @@ import Foundation
 class Player
 {
     var cards = [Card]()
+    var firstTwoCards = [Card]()
     var softHand = false
     var total = 0
+    var splitHandTotal = 0
     var splitHand = false
+    var winsHand = false
 }
