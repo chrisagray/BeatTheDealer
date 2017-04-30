@@ -16,6 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let userHasLaunchedApp = UserDefaults.standard.bool(forKey: "launched")
+        if !userHasLaunchedApp {
+            UserDefaults.standard.set(true, forKey: "launched")
+            UserDefaults.standard.set(true, forKey: "showCountState")
+            UserDefaults.standard.set(false, forKey: "dealerHitsState")
+        }
+        
         return true
     }
 

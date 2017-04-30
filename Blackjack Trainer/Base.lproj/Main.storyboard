@@ -44,7 +44,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Count: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NcR-Bf-cah">
-                                <rect key="frame" x="122" y="572" width="170" height="30"/>
+                                <rect key="frame" x="147" y="572" width="120" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -111,21 +111,10 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SA4-zr-KlO">
-                                <rect key="frame" x="304" y="333" width="90" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Hide Count">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="showOrHideCount:" destination="BYZ-38-t0r" eventType="touchUpInside" id="J0g-Vk-ee1"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ah-tE-hdQ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2ah-tE-hdQ">
                                 <rect key="frame" x="20" y="688" width="374" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -164,6 +153,13 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7AB-jV-lfO">
+                                <rect key="frame" x="274" y="572" width="120" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -173,7 +169,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Blackjack" id="3T0-20-hr9">
-                        <barButtonItem key="backBarButtonItem" title="Home" id="rjy-l8-iLm"/>
+                        <barButtonItem key="rightBarButtonItem" image="Settings" id="oGJ-zF-fAj">
+                            <connections>
+                                <segue destination="gOm-9I-Fcg" kind="show" identifier="settings" id="ax5-sh-iec"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="correctPlayLabel" destination="tCw-ah-J80" id="Xy6-dh-eZy"/>
@@ -182,9 +182,9 @@
                         <outlet property="dealerTitleLabel" destination="chw-1Q-Tok" id="9pQ-CZ-LZ7"/>
                         <outlet property="dealerTotalLabel" destination="1ij-HH-3dF" id="SPd-R5-djn"/>
                         <outlet property="gamblerTotalLabel" destination="inc-BR-yGI" id="Fjo-sq-Q3G"/>
-                        <outlet property="hideCountButton" destination="SA4-zr-KlO" id="vop-lN-2BZ"/>
-                        <outlet property="matchStatsLabel" destination="2ah-tE-hdQ" id="Mwc-eo-7dT"/>
+                        <outlet property="lastHandLabel" destination="7AB-jV-lfO" id="uy3-Se-3Ce"/>
                         <outlet property="playerTitleLabel" destination="rxo-Xr-1QG" id="H9H-Bf-LI0"/>
+                        <outlet property="statsLabel" destination="2ah-tE-hdQ" id="Miu-N1-gPO"/>
                         <outletCollection property="dealerCardButtons" destination="Iqv-gh-Pru" collectionClass="NSMutableArray" id="ph9-49-RKg"/>
                         <outletCollection property="dealerCardButtons" destination="l8p-q2-X2g" collectionClass="NSMutableArray" id="J4R-oL-j1D"/>
                         <outletCollection property="gamblerCardButtons" destination="9XZ-1t-HYW" collectionClass="NSMutableArray" id="WBT-Ar-4xh"/>
@@ -197,7 +197,61 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2266.666666666667" y="45.652173913043484"/>
+            <point key="canvasLocation" x="2275.36231884058" y="45.652173913043484"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="7cF-un-G92">
+            <objects>
+                <viewController id="gOm-9I-Fcg" customClass="SettingsViewController" customModule="Blackjack_Trainer" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nYs-1Y-JwM"/>
+                        <viewControllerLayoutGuide type="bottom" id="CGI-Z0-1aX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gxh-HP-wao">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rMv-BZ-3Je">
+                                <rect key="frame" x="304" y="139" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="changeCountState:" destination="gOm-9I-Fcg" eventType="valueChanged" id="6fp-P6-W2J"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Show Count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mum-c1-Xeo">
+                                <rect key="frame" x="43" y="144" width="128" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dealer hits on soft 17" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Del-Kq-hqT">
+                                <rect key="frame" x="43" y="193" width="226" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="QB7-Qg-5WK">
+                                <rect key="frame" x="304" y="191" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="changeDealerHitsState:" destination="gOm-9I-Fcg" eventType="valueChanged" id="wDl-Jk-4FY"/>
+                                </connections>
+                            </switch>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="CeD-bB-EE3"/>
+                    <connections>
+                        <outlet property="dealerHitsSwitch" destination="QB7-Qg-5WK" id="RNL-QZ-UGi"/>
+                        <outlet property="showCountLabel" destination="Mum-c1-Xeo" id="KC0-PW-p1z"/>
+                        <outlet property="showCountSwitch" destination="rMv-BZ-3Je" id="nCc-LL-FNX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Ac-KL-sRj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3179.7101449275365" y="45.652173913043484"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7RT-c2-b8P">
@@ -219,6 +273,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Settings" width="25" height="25"/>
         <image name="cardback" width="520" height="726"/>
     </resources>
 </document>

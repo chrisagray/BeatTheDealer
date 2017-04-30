@@ -15,7 +15,10 @@
 		83062F261E845BB700A0D120 /* BlackjackGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83062F251E845BB700A0D120 /* BlackjackGame.swift */; };
 		83062F2A1E845D5C00A0D120 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83062F291E845D5C00A0D120 /* Card.swift */; };
 		83062F2C1E845F9100A0D120 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83062F2B1E845F9100A0D120 /* Deck.swift */; };
+		830F1CBC1EB52255004FDA16 /* GameDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830F1CBB1EB52255004FDA16 /* GameDeck.swift */; };
 		834320FA1E9BFFB600153F12 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834320F91E9BFFB600153F12 /* Player.swift */; };
+		838B28F11EAE7EAB0069077D /* Hand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B28F01EAE7EAB0069077D /* Hand.swift */; };
+		83F60F881EB16BEF00EE1767 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F60F871EB16BEF00EE1767 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +32,10 @@
 		83062F251E845BB700A0D120 /* BlackjackGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackjackGame.swift; sourceTree = "<group>"; };
 		83062F291E845D5C00A0D120 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		83062F2B1E845F9100A0D120 /* Deck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		830F1CBB1EB52255004FDA16 /* GameDeck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameDeck.swift; sourceTree = "<group>"; };
 		834320F91E9BFFB600153F12 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		838B28F01EAE7EAB0069077D /* Hand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hand.swift; sourceTree = "<group>"; };
+		83F60F871EB16BEF00EE1767 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				83062F161E845B4D00A0D120 /* Main.storyboard */,
+				83F60F871EB16BEF00EE1767 /* SettingsViewController.swift */,
 				83062F141E845B4D00A0D120 /* BlackjackTrainerViewController.swift */,
 				832B1CAE1E8AEF0D00887A79 /* Model */,
 				83062F241E845B7900A0D120 /* Supporting Files */,
@@ -85,8 +92,10 @@
 			isa = PBXGroup;
 			children = (
 				83062F2B1E845F9100A0D120 /* Deck.swift */,
+				830F1CBB1EB52255004FDA16 /* GameDeck.swift */,
 				83062F291E845D5C00A0D120 /* Card.swift */,
 				83062F251E845BB700A0D120 /* BlackjackGame.swift */,
+				838B28F01EAE7EAB0069077D /* Hand.swift */,
 				834320F91E9BFFB600153F12 /* Player.swift */,
 			);
 			name = Model;
@@ -169,8 +178,11 @@
 				83062F151E845B4D00A0D120 /* BlackjackTrainerViewController.swift in Sources */,
 				83062F2A1E845D5C00A0D120 /* Card.swift in Sources */,
 				83062F131E845B4D00A0D120 /* AppDelegate.swift in Sources */,
+				830F1CBC1EB52255004FDA16 /* GameDeck.swift in Sources */,
+				838B28F11EAE7EAB0069077D /* Hand.swift in Sources */,
 				834320FA1E9BFFB600153F12 /* Player.swift in Sources */,
 				83062F261E845BB700A0D120 /* BlackjackGame.swift in Sources */,
+				83F60F881EB16BEF00EE1767 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

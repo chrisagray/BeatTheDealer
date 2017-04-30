@@ -11,7 +11,6 @@ import GameplayKit
 
 class Deck
 {
-    
     var cards = [Card]()
     
     let validSuits = ["hearts", "diamonds", "spades", "clubs"]
@@ -19,21 +18,15 @@ class Deck
     
     init(withCards: Bool) {
         if withCards {
-            for _ in 0...5 {
-                for rank in validRanks {
-                    for suit in validSuits {
-                        let newCard = Card()
-                        newCard.rank = rank
-                        newCard.suit = suit
-                        cards.append(newCard)
-                    }
+            for rank in validRanks {
+                for suit in validSuits {
+                    let newCard = Card()
+                    newCard.rank = rank
+                    newCard.suit = suit
+                    cards.append(newCard)
                 }
             }
         }
-    }
-
-    func dealTopCard() -> Card {
-        return cards.removeFirst()
     }
     
     func shuffle() {
