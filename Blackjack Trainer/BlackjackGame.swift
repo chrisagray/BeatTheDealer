@@ -73,12 +73,14 @@ class BlackjackGame
                 case 17...20:
                     if hand.total > dealer.currentHand.total {
                         winCount += 1
-                    }else if hand.total < dealer.currentHand.total {
+                    } else if hand.total < dealer.currentHand.total {
                         loseCount += 1
                     }
                 case 21:
                     if hand.blackjack {
                         winCount += 1
+                    } else {
+                        loseCount += 1
                     }
                 default: // >21
                     winCount += 1
