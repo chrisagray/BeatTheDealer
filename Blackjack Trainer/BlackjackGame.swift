@@ -36,8 +36,6 @@ class BlackjackGame
     weak var delegate: LastHandDelegate?
     
 //    func changeNumberOfDecks() {
-//        let newDeck = Deck(withCards: true)
-//        newDeck
 //    }
     
     func newGameUpdates() {
@@ -48,7 +46,6 @@ class BlackjackGame
         if lastHandBeforeShuffle {
             reshuffleShoe()
         }
-        print(gameDeck.shoe.count)
         if gameDeck.shoe.count <= deckAndAHalf { //reshuffle shoe once you run low
             lastHandBeforeShuffle = true
             //send delegate notification
@@ -61,11 +58,6 @@ class BlackjackGame
         var winCount = 0
         var loseCount = 0
         
-        if dealer.currentHand.blackjack {
-            handsPlayed += 1
-            return -1
-        }
-        
         for hand in gambler.hands {
             handsPlayed += 1
             if hand.total <= 21 {
@@ -77,8 +69,10 @@ class BlackjackGame
                         loseCount += 1
                     }
                 case 21:
-                    if hand.blackjack {
+                    if hand.blackjack && !dealer.currentHand.blackjack {
                         winCount += 1
+                    } else if hand.blackjack && dealer.currentHand.blackjack {
+                        break
                     } else {
                         loseCount += 1
                     }

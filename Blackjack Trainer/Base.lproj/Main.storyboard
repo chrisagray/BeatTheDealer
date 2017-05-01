@@ -22,20 +22,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="playerCard1" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9XZ-1t-HYW">
-                                <rect key="frame" x="147" y="371" width="100" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="cardback">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="playerCard2" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1b9-pB-ifX">
-                                <rect key="frame" x="167" y="371" width="100" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="cardback">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Player" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rxo-Xr-1QG">
                                 <rect key="frame" x="147" y="324" width="120" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -125,20 +111,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="dealerCard1" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iqv-gh-Pru">
-                                <rect key="frame" x="147" y="128" width="100" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="cardback">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="dealerCard2" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l8p-q2-X2g">
-                                <rect key="frame" x="167" y="128" width="100" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="cardback">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ij-HH-3dF">
                                 <rect key="frame" x="147" y="286" width="120" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -160,6 +132,22 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cardback" translatesAutoresizingMaskIntoConstraints="NO" id="edZ-dJ-Ys9">
+                                <rect key="frame" x="147" y="128" width="100" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cardback" translatesAutoresizingMaskIntoConstraints="NO" id="6yB-h9-8cG">
+                                <rect key="frame" x="167" y="128" width="100" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cardback" translatesAutoresizingMaskIntoConstraints="NO" id="Id8-jJ-pwF">
+                                <rect key="frame" x="147" y="371" width="100" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cardback" translatesAutoresizingMaskIntoConstraints="NO" id="GkU-KI-qJ4">
+                                <rect key="frame" x="167" y="371" width="100" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -185,14 +173,14 @@
                         <outlet property="lastHandLabel" destination="7AB-jV-lfO" id="uy3-Se-3Ce"/>
                         <outlet property="playerTitleLabel" destination="rxo-Xr-1QG" id="H9H-Bf-LI0"/>
                         <outlet property="statsLabel" destination="2ah-tE-hdQ" id="Miu-N1-gPO"/>
-                        <outletCollection property="dealerCardButtons" destination="Iqv-gh-Pru" collectionClass="NSMutableArray" id="ph9-49-RKg"/>
-                        <outletCollection property="dealerCardButtons" destination="l8p-q2-X2g" collectionClass="NSMutableArray" id="J4R-oL-j1D"/>
-                        <outletCollection property="gamblerCardButtons" destination="9XZ-1t-HYW" collectionClass="NSMutableArray" id="WBT-Ar-4xh"/>
-                        <outletCollection property="gamblerCardButtons" destination="1b9-pB-ifX" collectionClass="NSMutableArray" id="den-Wa-aqp"/>
                         <outletCollection property="actionButtons" destination="fTN-Ua-8lp" collectionClass="NSMutableArray" id="H2T-ZN-9W0"/>
                         <outletCollection property="actionButtons" destination="uq2-Qy-bbp" collectionClass="NSMutableArray" id="Ql2-aC-sTf"/>
                         <outletCollection property="actionButtons" destination="zWl-QK-odT" collectionClass="NSMutableArray" id="MuQ-Uh-XFG"/>
                         <outletCollection property="actionButtons" destination="toq-RK-2yF" collectionClass="NSMutableArray" id="5iP-5R-kNV"/>
+                        <outletCollection property="dealerCards" destination="edZ-dJ-Ys9" collectionClass="NSMutableArray" id="WOY-zt-yRd"/>
+                        <outletCollection property="dealerCards" destination="6yB-h9-8cG" collectionClass="NSMutableArray" id="XBr-ec-WdR"/>
+                        <outletCollection property="gamblerCards" destination="Id8-jJ-pwF" collectionClass="NSMutableArray" id="3XH-qD-TrO"/>
+                        <outletCollection property="gamblerCards" destination="GkU-KI-qJ4" collectionClass="NSMutableArray" id="bAL-EP-Cce"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
