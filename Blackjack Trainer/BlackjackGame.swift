@@ -17,10 +17,12 @@ class BlackjackGame
     private let deckAndAHalf = 78
     let numberOfDecks = 6
     
-    private let stand = "Stand"
-    private let hit = "Hit"
-    private let double = "Double"
-    private let split = "Split"
+    let hit = GamblerAction.hit
+    let stand = GamblerAction.stand
+    let double = GamblerAction.double
+    let split = GamblerAction.split
+    
+    let standAction = GamblerAction.stand
     
     var gambler = Player()
     var dealer = Player()
@@ -33,7 +35,23 @@ class BlackjackGame
     var handsGamblerWon = 0
     var lastHandBeforeShuffle = false
     
+    var winPercentage: Int {
+        if handsPlayed == 0 {
+            print("0 hands played")
+            return 0
+        } else {
+            return Int(Double(handsGamblerWon)/Double(handsPlayed)*100)
+        }
+    }
+    
     weak var delegate: LastHandDelegate?
+    
+    enum GamblerAction: String {
+        case hit = "Hit"
+        case stand = "Stand"
+        case double = "Double"
+        case split = "Split"
+    }
     
 //    func changeNumberOfDecks() {
 //    }
@@ -42,6 +60,8 @@ class BlackjackGame
         
         gambler = Player()
         dealer = Player()
+        
+        print(gameDeck.shoe.count)
         
         if lastHandBeforeShuffle {
             reshuffleShoe()
@@ -139,8 +159,7 @@ class BlackjackGame
     }
     
     func splitHand() {
-        //don't like calling splitHand in both game and Player
-        gambler.currentHand.total = 0
+        //not sure if I like calling splitHand in both game and Player
         gambler.splitHand()
         updateHandTotal(cardRank: getIntegerRank(rank: gambler.currentHand.cards.first!.rank), hand: gambler.currentHand)
     }
@@ -197,7 +216,7 @@ class BlackjackGame
         }
     }
     
-    func getCorrectPlay() -> String {
+    func getCorrectPlay() -> GamblerAction {
         
         //fix this
         let dealerFirstCardRank = getIntegerRank(rank: dealer.currentHand.cards.first!.rank)
@@ -213,7 +232,7 @@ class BlackjackGame
     
     
     //Aces will be passed in as 11
-    private func correctBasicStrategyPlayForThreeOrMoreCards(dealerRank: Int) -> String {
+    private func correctBasicStrategyPlayForThreeOrMoreCards(dealerRank: Int) -> GamblerAction {
         
         switch gambler.currentHand.soft {
         case false:
@@ -258,7 +277,7 @@ class BlackjackGame
     
     
     //Aces will be passed in as 11
-    private func correctBasicStrategyPlayForTwoCards(playerFirstRank: Int, playerSecondRank: Int, dealerRank: Int) -> String {
+    private func correctBasicStrategyPlayForTwoCards(playerFirstRank: Int, playerSecondRank: Int, dealerRank: Int) -> GamblerAction {
 
         if playerFirstRank == playerSecondRank && !gambler.alreadySplit {
             switch playerFirstRank {

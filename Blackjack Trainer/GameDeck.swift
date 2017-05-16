@@ -10,7 +10,7 @@ import Foundation
 
 class GameDeck
 {
-    var shoe = [Card]()
+    var shoe = [Card]() //might wanna rename this to "cards"
     
     init(numberOfDecks: Int) {
         for _ in 0..<numberOfDecks {

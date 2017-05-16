@@ -30,6 +30,7 @@ class Player
     
     func splitHand() {
         alreadySplit = true
+        currentHand.total = 0
         let newHand = Hand()
         newHand.cards = [hands[currentHandIndex].cards.removeLast()]
         hands.append(newHand)
