@@ -131,9 +131,9 @@ class BlackjackTrainerViewController: UIViewController {
         let correctAction = game.getCorrectPlay()
         
         if chosenAction == correctAction.rawValue {
-            correctPlayLabel.text = "Correct"
+            correctPlayLabel.text = "Correct."
         } else {
-            correctPlayLabel.text = "Incorrect, correct play is \(correctAction.rawValue)"
+            correctPlayLabel.text = "Incorrect, correct play is \(correctAction.rawValue)."
         }
         switch chosenAction {
         case game.hit.rawValue:
@@ -229,7 +229,11 @@ class BlackjackTrainerViewController: UIViewController {
         
         if game.currentPlayer === game.dealer { //updateTotal was already called on dealer's hand
             dealerTotalLabel.text = String(game.dealer.currentHand.total)
+        } else {
+            //this shouldn't be called after every gambler action
+            dealerTotalLabel.text = String(game.getIntegerRank(rank: game.dealer.currentHand.cards.first!.rank))
         }
+//        dealerTotalLabel.text = String(game.dealer.currentHand.total)
     }
     
     private func updateStatsLabel() {
@@ -244,7 +248,8 @@ class BlackjackTrainerViewController: UIViewController {
                 winOrLose = "Dealer wins."
             }
 //            statsLabel.text = winOrLose
-            print(winOrLose)
+            correctPlayLabel.text! += " \(winOrLose)"
+            correctPlayLabel.adjustsFontSizeToFitWidth = true
         } else {
 //            statsLabel.text = " "
         }
@@ -339,8 +344,8 @@ class BlackjackTrainerViewController: UIViewController {
             previousHandWasSplit = false
         }
         newCardImages.removeAll()
-        correctPlayLabel.text = " "
-        dealerTotalLabel.text = " "
+        correctPlayLabel.text = ""
+//        dealerTotalLabel.text = " "
 //        lastHandLabel.text = ""
         updateStatsLabel()
     }
@@ -435,7 +440,7 @@ class BlackjackTrainerViewController: UIViewController {
         handIsOver = false
         cleanUpTableUI()
         game.newGameUpdates()
-//        changeButtonState(button: dealButton, enabled: false)
+        changeButtonState(button: dealButton, enabled: false)
         
         for actionButton in actionButtons { //is there a better way to do this?
             changeButtonState(button: actionButton, enabled: true)
