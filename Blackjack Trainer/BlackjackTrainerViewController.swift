@@ -102,16 +102,21 @@ class BlackjackTrainerViewController: UIViewController {
         switch iPhoneHeight {
         case 568:
             //something like this
-            for label in allLabels {
-                label.font = UIFont.systemFont(ofSize: 17)
-            }
+//            for label in allLabels {
+//                label.font = UIFont.systemFont(ofSize: 17)
+//            }
+            dealerTitleLabel.font = UIFont.systemFont(ofSize: 18)
+            dealerTotalLabel.font = UIFont.systemFont(ofSize: 18)
+            playerTitleLabel.font = UIFont.systemFont(ofSize: 18)
+            gamblerTotalLabel.font = UIFont.systemFont(ofSize: 18)
+            correctPlayLabel.font = UIFont.systemFont(ofSize: 16)
+            countLabel.font = UIFont.systemFont(ofSize: 16)
             for button in actionButtons {
                 if let title = button.titleLabel {
                     title.font = UIFont.systemFont(ofSize: 14)
                 }
             }
             dealButton.titleLabel!.font = UIFont.systemFont(ofSize: 14)
-            view.layoutIfNeeded()
         default:
             break
         }
