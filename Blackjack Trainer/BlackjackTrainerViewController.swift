@@ -64,6 +64,7 @@ class BlackjackTrainerViewController: UIViewController {
     private var splitHandTotalLabel = UILabel()
     
     override func viewDidLoad() {
+//        print("viewDidLoad")
         //any view customization that could not be done in Interface Builder
         NotificationCenter.default.addObserver(self, selector: #selector(showOrHideCount), name: NSNotification.Name("showOrHideCount"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(changeDealerHitsOnSoft17), name: NSNotification.Name("changeDealerHitsOnSoft17"), object: nil)
@@ -76,19 +77,17 @@ class BlackjackTrainerViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         //call anything dependent on frame/bounds
-        configureConstants()
-        configureFonts()
+//        print("viewDidLayoutSubviews")
         configureUIDesign()
+//        configureFonts()
     }
     
-    //probably wanna override viewWillAppear
-    //any setup related to the state of your application and the data that will be displayed for the view
-    //UI customizations such as colors or text
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//    }
-    
-    
+    override func viewWillLayoutSubviews() {
+        //not sure about calling this here, but it works
+        configureConstants()
+        configureFonts()
+//        print("viewWillLayoutSubviews")
+    }
     
     private func configureConstants() {
         let screenSize = UIScreen.main.bounds
@@ -103,7 +102,6 @@ class BlackjackTrainerViewController: UIViewController {
         switch iPhoneHeight {
         case 568:
             //something like this
-            print("iPhone SE")
             for label in allLabels {
                 label.font = UIFont.systemFont(ofSize: 17)
             }
@@ -113,6 +111,7 @@ class BlackjackTrainerViewController: UIViewController {
                 }
             }
             dealButton.titleLabel!.font = UIFont.systemFont(ofSize: 14)
+            view.layoutIfNeeded()
         default:
             break
         }
@@ -244,9 +243,10 @@ class BlackjackTrainerViewController: UIViewController {
             } else {
                 winOrLose = "Dealer wins."
             }
-            statsLabel.text = "\(winOrLose)    Hands played: \(game.handsPlayed)   Hands won: \(game.handsGamblerWon)"
+//            statsLabel.text = winOrLose
+            print(winOrLose)
         } else {
-            statsLabel.text = " "
+//            statsLabel.text = " "
         }
     }
     
@@ -290,11 +290,11 @@ class BlackjackTrainerViewController: UIViewController {
         newCardImages.append(newCardImage)
         previousCard = newCardImage
 //        newCardImage.alpha = 0
-//        view.addSubview(newCardImage)
-        UIView.transition(with: newCardImage, duration: 0.5, options: [], animations: {
-            self.view.addSubview(newCardImage)
-//            newCardImage.alpha = 1
-        }, completion: nil)
+        view.addSubview(newCardImage)
+//        UIView.transition(with: newCardImage, duration: 0.5, options: [], animations: {
+//            self.view.addSubview(newCardImage)
+////            newCardImage.alpha = 1
+//        }, completion: nil)
     }
     
     private func splitCardsOnTable() {
@@ -374,8 +374,6 @@ class BlackjackTrainerViewController: UIViewController {
     }
     
     private func configureUIDesign() {
-
-        dealButton.layer.cornerRadius = 5
         
         setColorsForGradients(topRed: 65/255, topGreen: 67/255, topBlue: 68/255, topAlpha: 1, bottomRed: 35/255, bottomGreen: 37/255, bottomBlue: 39/255, bottomAlpha: 1)
         
@@ -383,10 +381,6 @@ class BlackjackTrainerViewController: UIViewController {
             actionButton.layer.cornerRadius = 5
             createGradient(button: actionButton, colors: gradientColors, radius: 5)
         }
-        
-//        setColorsForGradients(topRed: 41/255, topGreen: 128/255, topBlue: 185/255, topAlpha: 1, bottomRed: 44/255, bottomGreen: 62/255, bottomBlue: 80/255, bottomAlpha: 0)
-//        
-//        createGradient(view: view, colors: gradientColors)
         
         setColorsForGradients(topRed: 255/255, topGreen: 0, topBlue: 132/255, topAlpha: 1, bottomRed: 51/255, bottomGreen: 0, bottomBlue: 27/255, bottomAlpha: 1)
         
@@ -405,14 +399,8 @@ class BlackjackTrainerViewController: UIViewController {
         gradientLayer.frame = button.bounds
         gradientLayer.colors = colors
         gradientLayer.cornerRadius = radius
+        button.layer.masksToBounds = true
         button.layer.insertSublayer(gradientLayer, at: 0)
-    }
-    
-    func createGradient(view: UIView, colors: [CGColor]) {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = view.bounds
-        gradientLayer.colors = colors
-        view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     func createGradient(label: UILabel, colors: [CGColor], radius: CGFloat) {
