@@ -65,7 +65,6 @@ class BlackjackTrainerViewController: UIViewController {
     
     override func viewDidLoad() {
 //        print("viewDidLoad")
-        //any view customization that could not be done in Interface Builder
         NotificationCenter.default.addObserver(self, selector: #selector(showOrHideCount), name: NSNotification.Name("showOrHideCount"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(changeDealerHitsOnSoft17), name: NSNotification.Name("changeDealerHitsOnSoft17"), object: nil)
         
@@ -76,7 +75,6 @@ class BlackjackTrainerViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        //call anything dependent on frame/bounds
 //        print("viewDidLayoutSubviews")
         configureUIDesign()
 //        configureFonts()
