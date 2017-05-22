@@ -201,7 +201,7 @@ class BlackjackTrainerViewController: UIViewController {
         if game.gambler.lastHand { //or game.currentPlayer.....need to be consistent
             currentHandCircle.removeFromSuperview()
         }
-        currentHandCircle.frame = CGRect(x: previousCard.frame.minX, y: gamblerTotalLabel.center.y, width: 10, height: 10)
+        currentHandCircle.frame = CGRect(x: previousCard.frame.minX, y: gamblerTotalLabel.center.y - 5, width: 10, height: 10)
         view.addSubview(currentHandCircle)
     }
     
@@ -464,7 +464,7 @@ class BlackjackTrainerViewController: UIViewController {
         
         dealNewGameCards()
         if !game.gamblerCanSplit() {
-            changeButtonState(button: actionButtons.last!, enabled: false)
+//            changeButtonState(button: actionButtons.last!, enabled: false)
         }
         previousCard = gamblerCards.last!
         if game.checkForBlackjack() {
