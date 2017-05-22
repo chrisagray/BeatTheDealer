@@ -30,8 +30,8 @@ class BlackjackTrainerViewController: UIViewController {
     
     @IBOutlet var allLabels: [UILabel]!
     
-    
-    
+    let currentHandCircle = UIImageView(image: #imageLiteral(resourceName: "Current Hand Circle"))
+
     private var newCardImages = [UIImageView]()
     private var previousCard = UIImageView()
     private var topColorGradient = UIColor.clear.cgColor
@@ -190,9 +190,19 @@ class BlackjackTrainerViewController: UIViewController {
         updateGamblerTotalLabelsAfterSplit()
         game.splitHand()
         hitToPlayer()
+        showGamblerCurrentHand()
         if aces || gamblerHas21OrBusts {
             splitHandStandsOrBusts()
         }
+    }
+    
+    private func showGamblerCurrentHand() {
+        
+        if game.gambler.lastHand { //or game.currentPlayer.....need to be consistent
+            currentHandCircle.removeFromSuperview()
+        }
+        currentHandCircle.frame = CGRect(x: previousCard.frame.minX, y: gamblerTotalLabel.center.y, width: 10, height: 10)
+        view.addSubview(currentHandCircle)
     }
     
     private func splitHandStandsOrBusts() {
@@ -204,6 +214,7 @@ class BlackjackTrainerViewController: UIViewController {
         previousCard = gamblerCards.first!
         game.splitHandStandsOrBusts()
         hitToPlayer()
+        showGamblerCurrentHand()
         if aces || gamblerHas21OrBusts {
             switchPlayToDealer()
         }
@@ -212,7 +223,7 @@ class BlackjackTrainerViewController: UIViewController {
     private func updateGamblerTotalLabelsAfterSplit() {
         splitHandTotalLabel.frame = CGRect(x: gamblerCards.last!.frame.minX, y: gamblerTotalLabel.frame.minY, width: gamblerTotalLabel.frame.width, height: gamblerTotalLabel.frame.height)
         splitHandTotalLabel.textColor = UIColor.white
-        splitHandTotalLabel.font = UIFont.systemFont(ofSize: 26)
+        splitHandTotalLabel.font = UIFont.systemFont(ofSize: gamblerTotalLabel.font.pointSize)
         splitHandTotalLabel.textAlignment = .center
         view.addSubview(splitHandTotalLabel)
         gamblerTotalLabel.isHidden = true
@@ -313,11 +324,14 @@ class BlackjackTrainerViewController: UIViewController {
     }
     
     private func switchPlayToDealer() {
+        if game.gambler.alreadySplit { //current player? need to be consistent here too
+            currentHandCircle.removeFromSuperview()
+        }
         for actionButton in actionButtons {
             changeButtonState(button: actionButton, enabled: false)
         }
-        previousCard = dealerCards.last!
         game.currentPlayer = game.dealer
+        previousCard = dealerCards.last!
         game.flipDealerCard()
         updateCardImage(cardImageView: dealerCards.last!, card: game.dealer.currentHand.cards.last!)
         if game.dealerNeedsToHit() {
@@ -349,7 +363,6 @@ class BlackjackTrainerViewController: UIViewController {
         newCardImages.removeAll()
         correctPlayLabel.text = ""
 //        dealerTotalLabel.text = " "
-//        lastHandLabel.text = ""
         updateStatsLabel()
     }
     

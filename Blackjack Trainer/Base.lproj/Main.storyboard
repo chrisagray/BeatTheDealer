@@ -59,7 +59,7 @@
                                 <rect key="frame" x="20" y="270.33333333333331" width="374" height="143"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Correct" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCw-ah-J80">
-                                        <rect key="frame" x="0.0" y="60" width="374" height="24"/>
+                                        <rect key="frame" x="0.0" y="59.333333333333371" width="374" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -223,7 +223,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Blackjack" id="3T0-20-hr9">
-                        <barButtonItem key="leftBarButtonItem" title="Basic Strategy" id="1vo-Nb-7au">
+                        <barButtonItem key="leftBarButtonItem" image="Table" id="1vo-Nb-7au">
                             <connections>
                                 <segue destination="aEL-Jl-dLi" kind="show" id="ynw-ul-lDh"/>
                             </connections>
@@ -265,7 +265,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2272.5" y="45.422535211267608"/>
+            <point key="canvasLocation" x="2272.463768115942" y="44.836956521739133"/>
         </scene>
         <!--Settings-->
         <scene sceneID="7cF-un-G92">
@@ -381,6 +381,7 @@
     </scenes>
     <resources>
         <image name="Settings" width="25" height="25"/>
+        <image name="Table" width="25" height="25"/>
         <image name="cardback" width="520" height="726"/>
     </resources>
 </document>
