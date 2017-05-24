@@ -30,6 +30,16 @@ class BlackjackTrainerViewController: UIViewController {
     
     @IBOutlet var allLabels: [UILabel]!
     
+    var correctActions = 0
+    var incorrectActions = 0
+    var percentCorrect: Int {
+        print(game.handsPlayed)
+        if game.handsPlayed == 0 {
+            return 0
+        }
+        return Int(Double(correctActions)/(Double(correctActions + incorrectActions))*100)
+    }
+    
     let currentHandCircle = UIImageView(image: #imageLiteral(resourceName: "Current Hand Circle"))
 
     private var newCardImages = [UIImageView]()
@@ -97,12 +107,7 @@ class BlackjackTrainerViewController: UIViewController {
     
     private func configureFonts() {
         let iPhoneHeight = UIScreen.main.bounds.height
-        switch iPhoneHeight {
-        case 568:
-            //something like this
-//            for label in allLabels {
-//                label.font = UIFont.systemFont(ofSize: 17)
-//            }
+        if iPhoneHeight == 568 {
             dealerTitleLabel.font = UIFont.systemFont(ofSize: 18)
             dealerTotalLabel.font = UIFont.systemFont(ofSize: 18)
             playerTitleLabel.font = UIFont.systemFont(ofSize: 18)
@@ -115,8 +120,6 @@ class BlackjackTrainerViewController: UIViewController {
                 }
             }
             dealButton.titleLabel!.font = UIFont.systemFont(ofSize: 14)
-        default:
-            break
         }
     }
     
@@ -134,9 +137,11 @@ class BlackjackTrainerViewController: UIViewController {
         let correctAction = game.getCorrectPlay()
         
         if chosenAction == correctAction.rawValue {
+            correctActions += 1 //this might need to be in the model
             correctPlayLabel.text = "Correct."
         } else {
-            correctPlayLabel.text = "Incorrect, correct play is \(correctAction.rawValue)."
+            incorrectActions += 1
+            correctPlayLabel.text = "Incorrect. Correct play is \(correctAction.rawValue)."
         }
         switch chosenAction {
         case game.hit.rawValue:
@@ -464,7 +469,7 @@ class BlackjackTrainerViewController: UIViewController {
         
         dealNewGameCards()
         if !game.gamblerCanSplit() {
-//            changeButtonState(button: actionButtons.last!, enabled: false)
+            changeButtonState(button: actionButtons.last!, enabled: false) //same here
         }
         previousCard = gamblerCards.last!
         if game.checkForBlackjack() {
@@ -480,6 +485,10 @@ class BlackjackTrainerViewController: UIViewController {
             settingsVC.handsPlayed = game.handsPlayed
             settingsVC.handsWon = game.handsGamblerWon
             settingsVC.winPercentage = game.winPercentage
+            
+            settingsVC.correctActions = correctActions
+            settingsVC.incorrectActions = incorrectActions
+            settingsVC.percentCorrect = percentCorrect
         }
     }
 }

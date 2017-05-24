@@ -37,10 +37,9 @@ class BlackjackGame
     
     var winPercentage: Int {
         if handsPlayed == 0 {
-            print("0 hands played")
             return 0
         } else {
-            return Int(Double(handsGamblerWon)/Double(handsPlayed)*100)
+            return Int((Double(handsGamblerWon)/Double(handsPlayed))*100)
         }
     }
     
