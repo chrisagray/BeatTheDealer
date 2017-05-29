@@ -14,8 +14,18 @@ protocol LastHandDelegate: class {
 
 class BlackjackGame
 {
-    private let deckAndAHalf = 78
-    let numberOfDecks = 6
+    private var twentyFivePercentOfShoe: Int {
+        if numberOfDecks > 1 {
+            return Int(Double(numberOfDecks) * 52 * 0.25)
+        } else {
+            return 25 //arbitrary number, but reshuffling shoe below if this gets to 0
+        }
+    }
+    private var numberOfDecks = 6 { //this should be private, changing it to public so I can print it
+        didSet {
+            print(numberOfDecks)
+        }
+    }
     
     let hit = GamblerAction.hit
     let stand = GamblerAction.stand
@@ -27,7 +37,7 @@ class BlackjackGame
     var gambler = Player()
     var dealer = Player()
     
-    private lazy var gameDeck = GameDeck(numberOfDecks: 6)
+    private var gameDeck = GameDeck(numberOfDecks: 6) //6 is the default value
     
     var currentPlayer = Player()
     var count = 0
@@ -52,8 +62,14 @@ class BlackjackGame
         case split = "Split"
     }
     
-//    func changeNumberOfDecks() {
-//    }
+    func changeNumberOfDecks(number: Int) {
+        numberOfDecks = number
+        reshuffleShoe()
+    }
+    
+    func getNumberOfDecks() -> Int { //do I need this? Or can I make numberOfDecks public?
+        return numberOfDecks
+    }
     
     func newGameUpdates() {
         
@@ -65,7 +81,7 @@ class BlackjackGame
         if lastHandBeforeShuffle {
             reshuffleShoe()
         }
-        if gameDeck.shoe.count <= deckAndAHalf { //reshuffle shoe once you run low
+        if gameDeck.shoe.count <= twentyFivePercentOfShoe { //reshuffle shoe once you run low
             lastHandBeforeShuffle = true
             //send delegate notification
             delegate?.didReceiveHandUpdate()
@@ -79,6 +95,7 @@ class BlackjackGame
         
         for hand in gambler.hands {
             handsPlayed += 1
+            //Fix this to make it simpler
             if hand.total <= 21 {
                 switch dealer.currentHand.total {
                 case 17...20:
@@ -88,12 +105,16 @@ class BlackjackGame
                         loseCount += 1
                     }
                 case 21:
-                    if hand.blackjack && !dealer.currentHand.blackjack {
-                        winCount += 1
-                    } else if hand.blackjack && dealer.currentHand.blackjack {
-                        break
-                    } else {
+                    if hand.total != 21 {
                         loseCount += 1
+                    } else {
+                        if hand.blackjack && !dealer.currentHand.blackjack {
+                            winCount += 1
+                        } else if !hand.blackjack && dealer.currentHand.blackjack {
+                            loseCount += 1
+                        } else {
+                            break
+                        }
                     }
                 default: // >21
                     winCount += 1
@@ -107,6 +128,10 @@ class BlackjackGame
     }
     
     func dealTopCard(to hand: Hand, faceUp: Bool) {
+        
+        if gameDeck.shoe.first == nil { //although this shouldn't happen
+            reshuffleShoe()
+        }
         
         let topCard = gameDeck.dealTopCard()
         let topCardRank = getIntegerRank(rank: topCard.rank)

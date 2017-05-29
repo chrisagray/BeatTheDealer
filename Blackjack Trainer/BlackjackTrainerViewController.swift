@@ -33,8 +33,8 @@ class BlackjackTrainerViewController: UIViewController {
     var correctActions = 0
     var incorrectActions = 0
     var percentCorrect: Int {
-        print(game.handsPlayed)
-        if game.handsPlayed == 0 {
+//        print(game.handsPlayed)
+        if game.handsPlayed == 0 || (correctActions == 0 && incorrectActions == 0) {
             return 0
         }
         return Int(Double(correctActions)/(Double(correctActions + incorrectActions))*100)
@@ -62,7 +62,7 @@ class BlackjackTrainerViewController: UIViewController {
     private var dealerHitsOnSoft17 = false
     private var hitCardDistance: CGFloat = 0
     
-    private let game = BlackjackGame()
+    private var game = BlackjackGame()
     
     private var gamblerHas21OrBusts: Bool {
         return game.gambler.currentHand.total >= 21
@@ -75,8 +75,10 @@ class BlackjackTrainerViewController: UIViewController {
     
     override func viewDidLoad() {
 //        print("viewDidLoad")
+//        print(game.numberOfDecks)
         NotificationCenter.default.addObserver(self, selector: #selector(showOrHideCount), name: NSNotification.Name("showOrHideCount"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(changeDealerHitsOnSoft17), name: NSNotification.Name("changeDealerHitsOnSoft17"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(changeNumberOfDecks(_:)), name: NSNotification.Name("changeNumberOfDecks"), object: nil)
         
         countLabel.isHidden = !UserDefaults.standard.bool(forKey: "showCountState")
         dealerHitsOnSoft17 = UserDefaults.standard.bool(forKey: "dealerHitsState")
@@ -129,6 +131,14 @@ class BlackjackTrainerViewController: UIViewController {
     
     func changeDealerHitsOnSoft17() { //fix implementation?
         dealerHitsOnSoft17 = !dealerHitsOnSoft17
+    }
+    
+    func changeNumberOfDecks(_ notification: NSNotification) {
+        if let number = notification.userInfo?["number"] as? Int {
+            print("Decks changed. Calling game.changeNumberOfDecks() and newGame()")
+            game.changeNumberOfDecks(number: number)
+            newGame()
+        }
     }
     
     
@@ -489,6 +499,8 @@ class BlackjackTrainerViewController: UIViewController {
             settingsVC.correctActions = correctActions
             settingsVC.incorrectActions = incorrectActions
             settingsVC.percentCorrect = percentCorrect
+            
+            settingsVC.previousSliderValue = game.getNumberOfDecks()
         }
     }
 }

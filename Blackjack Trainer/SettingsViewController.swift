@@ -28,6 +28,8 @@ class SettingsViewController: UIViewController
     @IBOutlet weak var showCountMultiplierConstraint: NSLayoutConstraint!
     @IBOutlet var switches: [UISwitch]!
     
+    @IBOutlet weak var numberOfDecksSlider: UISlider!
+    @IBOutlet weak var numberOfDecksLabel: UILabel!
     
     var handsPlayed = 0
     var handsWon = 0
@@ -36,6 +38,12 @@ class SettingsViewController: UIViewController
     var correctActions = 0
     var incorrectActions = 0
     var percentCorrect = 0
+    
+    var previousSliderValue = 0
+    var roundedValue: Int {
+        return Int(round(numberOfDecksSlider.value))
+    }
+    var numberOfDecksWasChanged = false
     
     override func viewWillLayoutSubviews() {
         if UIScreen.main.bounds.height == 568 {
@@ -48,6 +56,19 @@ class SettingsViewController: UIViewController
         showCountSwitch.isOn = UserDefaults.standard.bool(forKey: "showCountState")
         dealerHitsSwitch.isOn = UserDefaults.standard.bool(forKey: "dealerHitsState")
         setTextForLabels()
+        numberOfDecksSlider.setValue(Float(previousSliderValue), animated: false)
+        numberOfDecksLabel.text = String(previousSliderValue)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if self.isMovingFromParentViewController {
+            if roundedValue != previousSliderValue {
+                let numberDict = ["number": roundedValue]
+                NotificationCenter.default.post(name: NSNotification.Name("changeNumberOfDecks"), object: nil, userInfo: numberDict)
+                previousSliderValue = roundedValue
+            }
+        }
     }
     
     private func configureUI() {
@@ -61,9 +82,9 @@ class SettingsViewController: UIViewController
     }
     
     private func configureConstants() {
-        showCountMultiplierConstraint.isActive = false
-        showCountMultiplierConstraint = NSLayoutConstraint(item: optionsStackView, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 2, constant: 8)
-        showCountMultiplierConstraint.isActive = true
+//        showCountMultiplierConstraint.isActive = false
+//        showCountMultiplierConstraint = NSLayoutConstraint(item: optionsStackView, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 2, constant: 8)
+//        showCountMultiplierConstraint.isActive = true
     }
     
     private func setTextForLabels() {
@@ -74,6 +95,12 @@ class SettingsViewController: UIViewController
         incorrectLabel.text = "Incorrect: \(incorrectActions)"
         percentCorrectLabel.text = "Percent correct: \(percentCorrect)%"
     }
+    
+    @IBAction func changeNumberOfDecks(_ slider: UISlider) {
+//        roundedValue = Int(round(slider.value))
+        numberOfDecksLabel.text = String(roundedValue)
+    }
+    
     
     @IBAction func changeCountState(_ sender: UISwitch) {
         NotificationCenter.default.post(name: NSNotification.Name("showOrHideCount"), object: nil)
