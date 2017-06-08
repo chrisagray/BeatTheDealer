@@ -42,7 +42,7 @@
             </objects>
             <point key="canvasLocation" x="3178" y="-648"/>
         </scene>
-        <!--Blackjack-->
+        <!--Beat the Dealer-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="BlackjackViewController" customModule="Beat_the_Dealer" customModuleProvider="target" sceneMemberID="viewController">
@@ -221,7 +221,8 @@
                             <constraint firstItem="Id8-jJ-pwF" firstAttribute="width" secondItem="edZ-dJ-Ys9" secondAttribute="width" id="xkS-BH-rhr"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Blackjack" id="3T0-20-hr9">
+                    <navigationItem key="navigationItem" title="Beat the Dealer" id="3T0-20-hr9">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="YHM-E8-JfN"/>
                         <barButtonItem key="leftBarButtonItem" image="Table" id="1vo-Nb-7au">
                             <connections>
                                 <segue destination="aEL-Jl-dLi" kind="show" id="ynw-ul-lDh"/>
