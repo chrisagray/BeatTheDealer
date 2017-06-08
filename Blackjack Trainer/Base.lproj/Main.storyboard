@@ -13,7 +13,7 @@
         <!--Basic Strategy View Controller-->
         <scene sceneID="mew-1n-neA">
             <objects>
-                <viewController id="aEL-Jl-dLi" customClass="BasicStrategyViewController" customModule="Blackjack_Master" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="aEL-Jl-dLi" customClass="BasicStrategyViewController" customModule="Beat_the_Dealer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Dl1-vc-wHz"/>
                         <viewControllerLayoutGuide type="bottom" id="mUi-vZ-J88"/>
@@ -45,7 +45,7 @@
         <!--Blackjack-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="BlackjackMasterViewController" customModule="Blackjack_Master" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="BlackjackViewController" customModule="Beat_the_Dealer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -269,7 +269,7 @@
         <!--Settings-->
         <scene sceneID="7cF-un-G92">
             <objects>
-                <viewController id="gOm-9I-Fcg" customClass="SettingsViewController" customModule="Blackjack_Master" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="gOm-9I-Fcg" customClass="SettingsViewController" customModule="Beat_the_Dealer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nYs-1Y-JwM"/>
                         <viewControllerLayoutGuide type="bottom" id="CGI-Z0-1aX"/>

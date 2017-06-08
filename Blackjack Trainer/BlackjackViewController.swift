@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BlackjackMasterViewController: UIViewController {
+class BlackjackViewController: UIViewController {
     
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet var dealerCards: [UIImageView]!
@@ -484,7 +484,7 @@ class BlackjackMasterViewController: UIViewController {
 }
 
 
-extension BlackjackMasterViewController: LastHandDelegate {
+extension BlackjackViewController: LastHandDelegate {
     func didReceiveHandUpdate() {
         correctPlayLabel.text = "Last hand! Shuffling decks next hand."
     }

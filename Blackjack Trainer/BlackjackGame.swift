@@ -284,7 +284,7 @@ class BlackjackGame
     
     //Aces will be passed in as 11
     private func correctBasicStrategyPlayForTwoCards(playerFirstRank: Int, playerSecondRank: Int, dealerRank: Int) -> GamblerAction {
-        if playerFirstRank == playerSecondRank && !gambler.alreadySplit {
+        if playerFirstRank == playerSecondRank && !gambler.alreadySplit { //pairs
             switch playerFirstRank {
             case 10:
                 return stand
@@ -328,7 +328,7 @@ class BlackjackGame
             }
         }
         
-        else if (playerFirstRank == 11 || playerSecondRank == 11) {
+        else if (playerFirstRank == 11 || playerSecondRank == 11) { //soft hands
             let cardRank = playerFirstRank == 11 ? playerSecondRank : playerFirstRank
             
             switch cardRank {
@@ -367,7 +367,7 @@ class BlackjackGame
             }
         }
         
-        else {
+        else { //hard hands
             let totalRank = playerFirstRank + playerSecondRank
             switch totalRank {
             case 17...21:
@@ -387,7 +387,12 @@ class BlackjackGame
                     return hit
                 }
             case 11:
-                return double
+                switch dealerRank {
+                case 11:
+                    return hit
+                default:
+                    return double
+                }
             case 10:
                 switch dealerRank {
                 case 10, 11:
