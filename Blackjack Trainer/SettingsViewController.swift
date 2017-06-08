@@ -25,11 +25,12 @@ class SettingsViewController: UIViewController
     @IBOutlet var allLabels: [UILabel]!
     
     @IBOutlet weak var optionsStackView: UIStackView!
-    @IBOutlet weak var showCountMultiplierConstraint: NSLayoutConstraint!
     @IBOutlet var switches: [UISwitch]!
     
     @IBOutlet weak var numberOfDecksSlider: UISlider!
     @IBOutlet weak var numberOfDecksLabel: UILabel!
+    
+    @IBOutlet weak var settingsStackView: UIStackView!
     
     var handsPlayed = 0
     var handsWon = 0
@@ -76,15 +77,9 @@ class SettingsViewController: UIViewController
             label.font = UIFont.systemFont(ofSize: 18)
         }
         for optionSwitch in switches {
-            optionSwitch.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+            optionSwitch.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
         }
-        configureConstants()
-    }
-    
-    private func configureConstants() {
-//        showCountMultiplierConstraint.isActive = false
-//        showCountMultiplierConstraint = NSLayoutConstraint(item: optionsStackView, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 2, constant: 8)
-//        showCountMultiplierConstraint.isActive = true
+        settingsStackView.spacing = 50
     }
     
     private func setTextForLabels() {
@@ -97,7 +92,6 @@ class SettingsViewController: UIViewController
     }
     
     @IBAction func changeNumberOfDecks(_ slider: UISlider) {
-//        roundedValue = Int(round(slider.value))
         numberOfDecksLabel.text = String(roundedValue)
     }
     

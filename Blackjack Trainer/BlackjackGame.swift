@@ -21,11 +21,7 @@ class BlackjackGame
             return 25 //arbitrary number, but reshuffling shoe below if this gets to 0
         }
     }
-    private var numberOfDecks = 6 { //this should be private, changing it to public so I can print it
-        didSet {
-            print(numberOfDecks)
-        }
-    }
+    private var numberOfDecks = 6
     
     let hit = GamblerAction.hit
     let stand = GamblerAction.stand
@@ -67,23 +63,18 @@ class BlackjackGame
         reshuffleShoe()
     }
     
-    func getNumberOfDecks() -> Int { //do I need this? Or can I make numberOfDecks public?
+    func getNumberOfDecks() -> Int {
         return numberOfDecks
     }
     
     func newGameUpdates() {
-        
         gambler = Player()
         dealer = Player()
-        
-        print(gameDeck.shoe.count)
-        
         if lastHandBeforeShuffle {
             reshuffleShoe()
         }
-        if gameDeck.shoe.count <= twentyFivePercentOfShoe { //reshuffle shoe once you run low
+        if gameDeck.shoe.count <= twentyFivePercentOfShoe { //reshuffle shoe once it runs low
             lastHandBeforeShuffle = true
-            //send delegate notification
             delegate?.didReceiveHandUpdate()
         }
         currentPlayer = gambler
@@ -95,7 +86,6 @@ class BlackjackGame
         
         for hand in gambler.hands {
             handsPlayed += 1
-            //Fix this to make it simpler
             if hand.total <= 21 {
                 switch dealer.currentHand.total {
                 case 17...20:
@@ -128,7 +118,6 @@ class BlackjackGame
     }
     
     func dealTopCard(to hand: Hand, faceUp: Bool) {
-        
         if gameDeck.shoe.first == nil { //although this shouldn't happen
             reshuffleShoe()
         }
@@ -183,7 +172,6 @@ class BlackjackGame
     }
     
     func splitHand() {
-        //not sure if I like calling splitHand in both game and Player
         gambler.splitHand()
         updateHandTotal(cardRank: getIntegerRank(rank: gambler.currentHand.cards.first!.rank), hand: gambler.currentHand)
     }
@@ -241,10 +229,7 @@ class BlackjackGame
     }
     
     func getCorrectPlay() -> GamblerAction {
-        
-        //fix this
         let dealerFirstCardRank = getIntegerRank(rank: dealer.currentHand.cards.first!.rank)
-        
         if gambler.currentHand.cards.count == 2 {
             let gamblerFirstCardRank = getIntegerRank(rank: gambler.currentHand.cards.first!.rank)
             let gamblerSecondCardRank = getIntegerRank(rank: gambler.currentHand.cards.last!.rank)
@@ -254,10 +239,8 @@ class BlackjackGame
         }
     }
     
-    
     //Aces will be passed in as 11
     private func correctBasicStrategyPlayForThreeOrMoreCards(dealerRank: Int) -> GamblerAction {
-        
         switch gambler.currentHand.soft {
         case false:
             switch gambler.currentHand.total {
@@ -299,10 +282,8 @@ class BlackjackGame
         }
     }
     
-    
     //Aces will be passed in as 11
     private func correctBasicStrategyPlayForTwoCards(playerFirstRank: Int, playerSecondRank: Int, dealerRank: Int) -> GamblerAction {
-
         if playerFirstRank == playerSecondRank && !gambler.alreadySplit {
             switch playerFirstRank {
             case 10:
