@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -14,7 +13,7 @@
         <!--Basic Strategy View Controller-->
         <scene sceneID="mew-1n-neA">
             <objects>
-                <viewController id="aEL-Jl-dLi" customClass="BasicStrategyViewController" customModule="Blackjack_Trainer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="aEL-Jl-dLi" customClass="BasicStrategyViewController" customModule="Blackjack_Master" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Dl1-vc-wHz"/>
                         <viewControllerLayoutGuide type="bottom" id="mUi-vZ-J88"/>
@@ -46,7 +45,7 @@
         <!--Blackjack-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="BlackjackTrainerViewController" customModule="Blackjack_Trainer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="BlackjackMasterViewController" customModule="Blackjack_Master" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -270,7 +269,7 @@
         <!--Settings-->
         <scene sceneID="7cF-un-G92">
             <objects>
-                <viewController id="gOm-9I-Fcg" customClass="SettingsViewController" customModule="Blackjack_Trainer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="gOm-9I-Fcg" customClass="SettingsViewController" customModule="Blackjack_Master" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nYs-1Y-JwM"/>
                         <viewControllerLayoutGuide type="bottom" id="CGI-Z0-1aX"/>

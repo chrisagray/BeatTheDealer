@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		83062F131E845B4D00A0D120 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83062F121E845B4D00A0D120 /* AppDelegate.swift */; };
-		83062F151E845B4D00A0D120 /* BlackjackTrainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83062F141E845B4D00A0D120 /* BlackjackTrainerViewController.swift */; };
+		83062F151E845B4D00A0D120 /* BlackjackMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83062F141E845B4D00A0D120 /* BlackjackMasterViewController.swift */; };
 		83062F181E845B4D00A0D120 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83062F161E845B4D00A0D120 /* Main.storyboard */; };
 		83062F1A1E845B4D00A0D120 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83062F191E845B4D00A0D120 /* Assets.xcassets */; };
 		83062F1D1E845B4D00A0D120 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83062F1B1E845B4D00A0D120 /* LaunchScreen.storyboard */; };
@@ -23,9 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		83062F0F1E845B4D00A0D120 /* Blackjack Trainer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Blackjack Trainer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		83062F0F1E845B4D00A0D120 /* Blackjack Master.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Blackjack Master.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		83062F121E845B4D00A0D120 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		83062F141E845B4D00A0D120 /* BlackjackTrainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackjackTrainerViewController.swift; sourceTree = "<group>"; };
+		83062F141E845B4D00A0D120 /* BlackjackMasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackjackMasterViewController.swift; sourceTree = "<group>"; };
 		83062F171E845B4D00A0D120 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		83062F191E845B4D00A0D120 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		83062F1C1E845B4D00A0D120 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -54,7 +54,7 @@
 		83062F061E845B4D00A0D120 = {
 			isa = PBXGroup;
 			children = (
-				83062F111E845B4D00A0D120 /* Blackjack Trainer */,
+				83062F111E845B4D00A0D120 /* Blackjack Master */,
 				83062F101E845B4D00A0D120 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,21 +62,22 @@
 		83062F101E845B4D00A0D120 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				83062F0F1E845B4D00A0D120 /* Blackjack Trainer.app */,
+				83062F0F1E845B4D00A0D120 /* Blackjack Master.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		83062F111E845B4D00A0D120 /* Blackjack Trainer */ = {
+		83062F111E845B4D00A0D120 /* Blackjack Master */ = {
 			isa = PBXGroup;
 			children = (
 				83062F161E845B4D00A0D120 /* Main.storyboard */,
 				836959A11EC692D500B8184D /* BasicStrategyViewController.swift */,
 				83F60F871EB16BEF00EE1767 /* SettingsViewController.swift */,
-				83062F141E845B4D00A0D120 /* BlackjackTrainerViewController.swift */,
+				83062F141E845B4D00A0D120 /* BlackjackMasterViewController.swift */,
 				832B1CAE1E8AEF0D00887A79 /* Model */,
 				83062F241E845B7900A0D120 /* Supporting Files */,
 			);
+			name = "Blackjack Master";
 			path = "Blackjack Trainer";
 			sourceTree = "<group>";
 		};
@@ -107,9 +108,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		83062F0E1E845B4D00A0D120 /* Blackjack Trainer */ = {
+		83062F0E1E845B4D00A0D120 /* Blackjack Master */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 83062F211E845B4D00A0D120 /* Build configuration list for PBXNativeTarget "Blackjack Trainer" */;
+			buildConfigurationList = 83062F211E845B4D00A0D120 /* Build configuration list for PBXNativeTarget "Blackjack Master" */;
 			buildPhases = (
 				83062F0B1E845B4D00A0D120 /* Sources */,
 				83062F0C1E845B4D00A0D120 /* Frameworks */,
@@ -119,9 +120,9 @@
 			);
 			dependencies = (
 			);
-			name = "Blackjack Trainer";
+			name = "Blackjack Master";
 			productName = "Blackjack Trainer";
-			productReference = 83062F0F1E845B4D00A0D120 /* Blackjack Trainer.app */;
+			productReference = 83062F0F1E845B4D00A0D120 /* Blackjack Master.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -141,7 +142,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83062F0A1E845B4D00A0D120 /* Build configuration list for PBXProject "Blackjack Trainer" */;
+			buildConfigurationList = 83062F0A1E845B4D00A0D120 /* Build configuration list for PBXProject "Blackjack Master" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -154,7 +155,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				83062F0E1E845B4D00A0D120 /* Blackjack Trainer */,
+				83062F0E1E845B4D00A0D120 /* Blackjack Master */,
 			);
 		};
 /* End PBXProject section */
@@ -178,7 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83062F2C1E845F9100A0D120 /* Deck.swift in Sources */,
-				83062F151E845B4D00A0D120 /* BlackjackTrainerViewController.swift in Sources */,
+				83062F151E845B4D00A0D120 /* BlackjackMasterViewController.swift in Sources */,
 				836959A21EC692D500B8184D /* BasicStrategyViewController.swift in Sources */,
 				83062F2A1E845D5C00A0D120 /* Card.swift in Sources */,
 				83062F131E845B4D00A0D120 /* AppDelegate.swift in Sources */,
@@ -311,7 +312,7 @@
 				INFOPLIST_FILE = "Blackjack Trainer/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "chrisgray.Blackjack-Trainer";
+				PRODUCT_BUNDLE_IDENTIFIER = "chrisgray.Blackjack-Master";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -325,7 +326,7 @@
 				INFOPLIST_FILE = "Blackjack Trainer/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "chrisgray.Blackjack-Trainer";
+				PRODUCT_BUNDLE_IDENTIFIER = "chrisgray.Blackjack-Master";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -334,7 +335,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		83062F0A1E845B4D00A0D120 /* Build configuration list for PBXProject "Blackjack Trainer" */ = {
+		83062F0A1E845B4D00A0D120 /* Build configuration list for PBXProject "Blackjack Master" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83062F1F1E845B4D00A0D120 /* Debug */,
@@ -343,7 +344,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83062F211E845B4D00A0D120 /* Build configuration list for PBXNativeTarget "Blackjack Trainer" */ = {
+		83062F211E845B4D00A0D120 /* Build configuration list for PBXNativeTarget "Blackjack Master" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83062F221E845B4D00A0D120 /* Debug */,
