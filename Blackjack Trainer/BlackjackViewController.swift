@@ -8,8 +8,6 @@
 
 import UIKit
 
-//testing another comment
-
 class BlackjackViewController: UIViewController {
     
     @IBOutlet weak var countLabel: UILabel!
