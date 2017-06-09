@@ -8,7 +8,7 @@
 
 import UIKit
 
-//testing commit once more
+//testing commit
 
 class BlackjackViewController: UIViewController {
     
