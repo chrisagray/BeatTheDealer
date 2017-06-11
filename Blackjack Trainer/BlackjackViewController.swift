@@ -50,7 +50,6 @@ class BlackjackViewController: UIViewController {
         }
     }
     
-    private let twentyOne = 21
     private var numberOfEdgeHits = 0
     private var numberOfCardsHitToPlayer = 0
     private var maxCardsToHitBeforeOverlap = 6
@@ -100,20 +99,41 @@ class BlackjackViewController: UIViewController {
     }
     
     private func configureFonts() {
+        var titleLabelFont: CGFloat = 26
+        var correctPlayLabelFont: CGFloat = 24
+        var countLabelFont: CGFloat = 20
+        var actionButtonsFont: CGFloat = 18
         let iPhoneHeight = UIScreen.main.bounds.height
-        if iPhoneHeight == 568 {
-            dealerTitleLabel.font = UIFont.systemFont(ofSize: 18)
-            dealerTotalLabel.font = UIFont.systemFont(ofSize: 18)
-            playerTitleLabel.font = UIFont.systemFont(ofSize: 18)
-            gamblerTotalLabel.font = UIFont.systemFont(ofSize: 18)
-            correctPlayLabel.font = UIFont.systemFont(ofSize: 16)
-            countLabel.font = UIFont.systemFont(ofSize: 16)
+        if iPhoneHeight == 667 { //iPhone 7
+            titleLabelFont = 22
+            correctPlayLabelFont = 20
+            countLabelFont = 18
+            actionButtonsFont = 16
+        } else if iPhoneHeight == 568 { //iPhone SE
+            titleLabelFont = 18
+            correctPlayLabelFont = 16
+            countLabelFont = 14
+            actionButtonsFont = 12
+        } else if iPhoneHeight == 480 { //iPhone 4s
+            titleLabelFont = 13
+            correctPlayLabelFont = 12
+            countLabelFont = 12
+            actionButtonsFont = 10
+        }
+        
+        if iPhoneHeight != 736 {
+            dealerTitleLabel.font = UIFont.systemFont(ofSize: titleLabelFont)
+            dealerTotalLabel.font = UIFont.systemFont(ofSize: titleLabelFont)
+            playerTitleLabel.font = UIFont.systemFont(ofSize: titleLabelFont)
+            gamblerTotalLabel.font = UIFont.systemFont(ofSize: titleLabelFont)
+            correctPlayLabel.font = UIFont.systemFont(ofSize: correctPlayLabelFont)
+            countLabel.font = UIFont.systemFont(ofSize: countLabelFont)
             for button in actionButtons {
                 if let title = button.titleLabel {
-                    title.font = UIFont.systemFont(ofSize: 14)
+                    title.font = UIFont.systemFont(ofSize: actionButtonsFont)
                 }
             }
-            dealButton.titleLabel!.font = UIFont.systemFont(ofSize: 14)
+            dealButton.titleLabel!.font = UIFont.systemFont(ofSize: actionButtonsFont)
         }
     }
     
@@ -138,10 +158,10 @@ class BlackjackViewController: UIViewController {
         
         if chosenAction == correctAction.rawValue {
             correctActions += 1
-            correctPlayLabel.text = "Correct."
+            correctPlayLabel.text = "Correct"
         } else {
             incorrectActions += 1
-            correctPlayLabel.text = "Incorrect. Correct play is \(correctAction.rawValue)."
+            correctPlayLabel.text = "Incorrect. Correct play is \(correctAction.rawValue)"
         }
         switch chosenAction {
         case game.hit.rawValue:
@@ -261,11 +281,15 @@ class BlackjackViewController: UIViewController {
             if round > 0 {
                 winOrLose = "You win!"
             } else if round == 0 {
-                winOrLose = "Push."
+                winOrLose = "Push"
             } else {
-                winOrLose = "Dealer wins."
+                winOrLose = "Dealer wins"
             }
-            correctPlayLabel.text! += " \(winOrLose)"
+            if correctPlayLabel.text!.isEmpty {
+                correctPlayLabel.text! = winOrLose
+            } else {
+                correctPlayLabel.text! += ". \(winOrLose)"
+            }
             correctPlayLabel.adjustsFontSizeToFitWidth = true
         }
     }

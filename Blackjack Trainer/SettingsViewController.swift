@@ -47,8 +47,9 @@ class SettingsViewController: UIViewController
     var numberOfDecksWasChanged = false
     
     override func viewWillLayoutSubviews() {
-        if UIScreen.main.bounds.height == 568 {
-            configureUI()
+        let iPhoneHeight = UIScreen.main.bounds.height
+        if iPhoneHeight == 568 || iPhoneHeight == 480 {
+            configureUI(iPhoneHeight: iPhoneHeight)
         }
     }
     
@@ -72,12 +73,22 @@ class SettingsViewController: UIViewController
         }
     }
     
-    private func configureUI() {
+    private func configureUI(iPhoneHeight: CGFloat) {
+        var labelFont: CGFloat = 21
+        var switchPercentage: CGFloat = 1
+        
+        if iPhoneHeight == 568 {
+            labelFont = 16
+            switchPercentage = 0.85
+        } else if iPhoneHeight == 480 {
+            labelFont = 15
+            switchPercentage = 0.75
+        }
         for label in allLabels {
-            label.font = UIFont.systemFont(ofSize: 18)
+            label.font = UIFont.systemFont(ofSize: labelFont)
         }
         for optionSwitch in switches {
-            optionSwitch.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
+            optionSwitch.transform = CGAffineTransform(scaleX: switchPercentage, y: switchPercentage)
         }
         settingsStackView.spacing = 50
     }

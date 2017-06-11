@@ -196,7 +196,6 @@ class BlackjackGame
     }
     
     func reshuffleShoe() {
-        print("Shuffling shoe")
         gameDeck = GameDeck(numberOfDecks: numberOfDecks) //initialize new gameDeck
         count = 0
         lastHandBeforeShuffle = false
@@ -246,21 +245,19 @@ class BlackjackGame
             switch gambler.currentHand.total {
             case 6...11:
                 return hit
-            case 12...15:
+            case 12:
+                switch dealerRank {
+                case 4...6:
+                    return stand
+                default: //2, 3, 7...11
+                    return hit
+                }
+            case 13...16:
                 switch dealerRank {
                 case 2...6:
                     return stand
                 default: //7...11
                     return hit
-                }
-            case 16:
-                switch dealerRank {
-                case 2...6:
-                    return stand
-                case 7...9, 11:
-                    return hit
-                default: //10
-                    return stand
                 }
             default: //17...21
                 return stand
