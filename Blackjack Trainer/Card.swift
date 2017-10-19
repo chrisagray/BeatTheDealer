@@ -12,4 +12,15 @@ class Card
 {
     var rank = String()
     var suit = String()
+    
+    var integerRank: Int {
+        switch rank {
+        case "jack", "queen", "king":
+            return 10
+        case "ace":
+            return 11
+        default:
+            return Int(rank)!
+        }
+    }
 }

@@ -8,21 +8,19 @@
 
 import Foundation
 
-class GameDeck
+class Shoe
 {
-    var shoe = [Card]() //might wanna rename this to "cards"
+    var cards = [Card]()
     
     init(numberOfDecks: Int) {
         for _ in 0..<numberOfDecks {
-            let newDeck = Deck(withCards: true)
+            let newDeck = Deck()
             newDeck.shuffle()
-            for card in newDeck.cards { //slow implementation
-                shoe.append(card)
-            }
+            cards.append(contentsOf: newDeck.cards)
         }
     }
     
     func dealTopCard() -> Card {
-        return shoe.removeFirst()
+        return cards.removeFirst()
     }
 }

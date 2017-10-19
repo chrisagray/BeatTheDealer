@@ -33,7 +33,7 @@ class BlackjackGame
     var gambler = Player()
     var dealer = Player()
     
-    private var gameDeck = GameDeck(numberOfDecks: 6) //6 is the default value
+    private var shoe = Shoe(numberOfDecks: 6) //6 is the default value
     
     var currentPlayer = Player()
     var count = 0
@@ -49,14 +49,16 @@ class BlackjackGame
         }
     }
     
+    private var basicStrategy = BasicStrategy()
+    
     weak var delegate: LastHandDelegate?
     
-    enum GamblerAction: String {
-        case hit = "Hit"
-        case stand = "Stand"
-        case double = "Double"
-        case split = "Split"
-    }
+//    enum GamblerAction: String {
+//        case hit = "Hit"
+//        case stand = "Stand"
+//        case double = "Double"
+//        case split = "Split"
+//    }
     
     func changeNumberOfDecks(number: Int) {
         numberOfDecks = number
@@ -73,7 +75,7 @@ class BlackjackGame
         if lastHandBeforeShuffle {
             reshuffleShoe()
         }
-        if gameDeck.shoe.count <= twentyFivePercentOfShoe { //reshuffle shoe once it runs low
+        if shoe.cards.count <= twentyFivePercentOfShoe { //reshuffle shoe once it runs low
             lastHandBeforeShuffle = true
             delegate?.didReceiveHandUpdate()
         }
@@ -118,22 +120,23 @@ class BlackjackGame
     }
     
     func dealTopCard(to hand: Hand, faceUp: Bool) {
-        if gameDeck.shoe.first == nil { //although this shouldn't happen
+        if shoe.cards.first == nil { //although this shouldn't happen
             reshuffleShoe()
         }
         
-        let topCard = gameDeck.dealTopCard()
-        let topCardRank = getIntegerRank(rank: topCard.rank)
+        let topCard = shoe.dealTopCard()
+        let topCardRank = topCard.integerRank
         
         hand.cards.append(topCard)
-        updateHandTotal(cardRank: topCardRank, hand: hand)
+//        updateHandTotal(cardRank: topCardRank, hand: hand)
+        hand.updateTotal(cardRank: topCardRank)
         if faceUp {
             updateCount(rank: topCardRank)
         }
     }
     
     func gamblerCanSplit() -> Bool {
-        return getIntegerRank(rank: gambler.currentHand.cards.first!.rank) == getIntegerRank(rank: gambler.currentHand.cards.last!.rank)
+        return gambler.currentHand.cards.first!.integerRank == gambler.currentHand.cards.last!.integerRank
     }
     
     func checkForBlackjack() -> Bool {
@@ -144,45 +147,18 @@ class BlackjackGame
         }
     }
     
-    func updateHandTotal(cardRank: Int, hand: Hand) {
-        if cardRank == 11 {
-            if hand.soft == true {
-                hand.total += 1
-            } else {
-                if hand.total + 11 > 21 {
-                    hand.total += 1
-                } else {
-                    hand.total += 11
-                    if hand.total != 21 {
-                        hand.soft = true
-                    }
-                }
-            }
-        } else if hand.soft == true {
-            if hand.total + cardRank > 21 {
-                hand.soft = false
-                hand.total -= 10
-            } else if hand.total + cardRank == 21 {
-                hand.soft = false
-            }
-            hand.total += cardRank
-        } else {
-            hand.total += cardRank
-        }
-    }
-    
     func splitHand() {
         gambler.splitHand()
-        updateHandTotal(cardRank: getIntegerRank(rank: gambler.currentHand.cards.first!.rank), hand: gambler.currentHand)
+        gambler.currentHand.updateTotal(cardRank: gambler.currentHand.cards.first!.integerRank)
     }
     
     func splitHandStandsOrBusts() {
         gambler.switchBackToFirstHand()
-        updateHandTotal(cardRank: getIntegerRank(rank: gambler.currentHand.cards.first!.rank), hand: gambler.currentHand)
+        gambler.currentHand.updateTotal(cardRank: gambler.currentHand.cards.first!.integerRank)
     }
     
     func flipDealerCard() {
-        let dealerSecondCardRank = getIntegerRank(rank: dealer.currentHand.cards.last!.rank)
+        let dealerSecondCardRank = dealer.currentHand.cards.last!.integerRank
         updateCount(rank: dealerSecondCardRank)
     }
     
@@ -196,25 +172,9 @@ class BlackjackGame
     }
     
     func reshuffleShoe() {
-        gameDeck = GameDeck(numberOfDecks: numberOfDecks) //initialize new gameDeck
+        shoe = Shoe(numberOfDecks: numberOfDecks) //initialize new shoe
         count = 0
         lastHandBeforeShuffle = false
-    }
-    
-    func getIntegerRank(rank: String) -> Int {
-        
-        var rankIntValue: Int
-        
-        switch rank {
-        case "jack", "queen", "king":
-            rankIntValue = 10
-        case "ace":
-            rankIntValue = 11
-        default:
-            rankIntValue = Int(rank)!
-        }
-        
-        return rankIntValue
     }
     
     func updateCount(rank: Int) {
@@ -228,185 +188,14 @@ class BlackjackGame
     }
     
     func getCorrectPlay() -> GamblerAction {
-        let dealerFirstCardRank = getIntegerRank(rank: dealer.currentHand.cards.first!.rank)
+        //TODO: make this clearer
+        let dealerFirstCardRank = dealer.currentHand.cards.first!.integerRank
         if gambler.currentHand.cards.count == 2 {
-            let gamblerFirstCardRank = getIntegerRank(rank: gambler.currentHand.cards.first!.rank)
-            let gamblerSecondCardRank = getIntegerRank(rank: gambler.currentHand.cards.last!.rank)
-            return correctBasicStrategyPlayForTwoCards(playerFirstRank: gamblerFirstCardRank, playerSecondRank: gamblerSecondCardRank, dealerRank: dealerFirstCardRank)
+            let gamblerFirstCardRank = gambler.currentHand.cards.first!.integerRank
+            let gamblerSecondCardRank = gambler.currentHand.cards.last!.integerRank
+            return basicStrategy.twoCards(firstRank: gamblerFirstCardRank, secondRank: gamblerSecondCardRank, dealerRank: dealerFirstCardRank, soft: gambler.currentHand.soft, alreadySplit: gambler.alreadySplit)
         } else {
-            return correctBasicStrategyPlayForThreeOrMoreCards(dealerRank: dealerFirstCardRank)
-        }
-    }
-    
-    //Aces will be passed in as 11
-    private func correctBasicStrategyPlayForThreeOrMoreCards(dealerRank: Int) -> GamblerAction {
-        switch gambler.currentHand.soft {
-        case false:
-            switch gambler.currentHand.total {
-            case 6...11:
-                return hit
-            case 12:
-                switch dealerRank {
-                case 4...6:
-                    return stand
-                default: //2, 3, 7...11
-                    return hit
-                }
-            case 13...16:
-                switch dealerRank {
-                case 2...6:
-                    return stand
-                default: //7...11
-                    return hit
-                }
-            default: //17...21
-                return stand
-            }
-        case true:
-            switch gambler.currentHand.total {
-            case 12...17:
-                return hit
-            case 18:
-                switch dealerRank {
-                case 2...8:
-                    return stand
-                default: //9, 10, 11
-                    return hit
-                }
-            default: //19...21
-                return stand
-            }
-        }
-    }
-    
-    //Aces will be passed in as 11
-    private func correctBasicStrategyPlayForTwoCards(playerFirstRank: Int, playerSecondRank: Int, dealerRank: Int) -> GamblerAction {
-        if playerFirstRank == playerSecondRank && !gambler.alreadySplit { //pairs
-            switch playerFirstRank {
-            case 10:
-                return stand
-            case 2, 3, 7:
-                switch dealerRank {
-                case 2...7:
-                    return split
-                default:
-                    return hit
-                }
-            case 4:
-                switch dealerRank {
-                case 5, 6:
-                    return split
-                default:
-                    return hit
-                }
-            case 5:
-                switch dealerRank {
-                case 10, 11:
-                    return hit
-                default:
-                    return double
-                }
-            case 6:
-                switch dealerRank {
-                case 2...6:
-                    return split
-                default:
-                    return hit
-                }
-            case 9:
-                switch dealerRank {
-                case 7, 10, 11:
-                    return stand
-                default:
-                    return split
-                }
-            default: //8, 11
-                return split
-            }
-        }
-        
-        else if (playerFirstRank == 11 || playerSecondRank == 11) { //soft hands
-            let cardRank = playerFirstRank == 11 ? playerSecondRank : playerFirstRank
-            
-            switch cardRank {
-            case 2, 3:
-                switch dealerRank {
-                case 5, 6:
-                    return double
-                default:
-                    return hit
-                }
-            case 4, 5:
-                switch dealerRank {
-                case 4...6:
-                    return double
-                default:
-                    return hit
-                }
-            case 6:
-                switch dealerRank {
-                case 3...6:
-                    return double
-                default:
-                    return hit
-                }
-            case 7:
-                switch dealerRank {
-                case 2, 7, 8:
-                    return stand
-                case 3...6:
-                    return double
-                default: //9...A
-                    return hit
-                }
-            default: //8...10
-                return stand
-            }
-        }
-        
-        else { //hard hands
-            let totalRank = playerFirstRank + playerSecondRank
-            switch totalRank {
-            case 17...21:
-                return stand
-            case 13...16:
-                switch dealerRank {
-                case 2...6:
-                    return stand
-                default:
-                    return hit
-                }
-            case 12:
-                switch dealerRank {
-                case 4...6:
-                    return stand
-                default:
-                    return hit
-                }
-            case 11:
-                switch dealerRank {
-                case 11:
-                    return hit
-                default:
-                    return double
-                }
-            case 10:
-                switch dealerRank {
-                case 10, 11:
-                    return hit
-                default:
-                    return double
-                }
-            case 9:
-                switch dealerRank {
-                case 3...6:
-                    return double
-                default:
-                    return hit
-                }
-            default: //5...8
-                return hit
-            }
+            return basicStrategy.threeOrMoreCards(total: gambler.currentHand.total, soft: gambler.currentHand.soft, dealerRank: dealerFirstCardRank)
         }
     }
 }

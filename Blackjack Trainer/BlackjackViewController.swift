@@ -71,23 +71,21 @@ class BlackjackViewController: UIViewController {
     private var splitHandTotalLabel = UILabel()
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(showOrHideCount), name: NSNotification.Name("showOrHideCount"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(changeDealerHitsOnSoft17), name: NSNotification.Name("changeDealerHitsOnSoft17"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(changeNumberOfDecks(_:)), name: NSNotification.Name("changeNumberOfDecks"), object: nil)
-        
         countLabel.isHidden = !UserDefaults.standard.bool(forKey: "showCountState")
         dealerHitsOnSoft17 = UserDefaults.standard.bool(forKey: "dealerHitsState")
         game.delegate = self as LastHandDelegate
+        configureFonts()
+        configureConstants()
         newGame()
     }
     
     override func viewDidLayoutSubviews() {
         configureUIDesign()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        configureConstants()
-        configureFonts()
+        hitCardDistance = dealerCards.last!.frame.minX - dealerCards.first!.frame.minX
     }
     
     private func configureConstants() {
@@ -95,7 +93,6 @@ class BlackjackViewController: UIViewController {
         cardWidthConstraint.constant = screenSize.width * 0.25
         cardHeightConstraint.constant = screenSize.height * 0.20
         cardSpacingConstraint.constant = -0.20*screenSize.width
-        hitCardDistance = dealerCards.last!.frame.minX - dealerCards.first!.frame.minX
     }
     
     private func configureFonts() {
@@ -137,15 +134,15 @@ class BlackjackViewController: UIViewController {
         }
     }
     
-    func showOrHideCount() {
+    @objc func showOrHideCount() {
         countLabel.isHidden = !countLabel.isHidden
     }
     
-    func changeDealerHitsOnSoft17() {
+    @objc func changeDealerHitsOnSoft17() {
         dealerHitsOnSoft17 = !dealerHitsOnSoft17
     }
     
-    func changeNumberOfDecks(_ notification: NSNotification) {
+    @objc func changeNumberOfDecks(_ notification: NSNotification) {
         if let number = notification.userInfo?["number"] as? Int {
             game.changeNumberOfDecks(number: number)
             newGame()
@@ -268,7 +265,7 @@ class BlackjackViewController: UIViewController {
     
     private func updateDealerTotalLabel() {
         if game.currentPlayer === game.gambler {
-            dealerTotalLabel.text = String(game.getIntegerRank(rank: game.dealer.currentHand.cards.first!.rank))
+            dealerTotalLabel.text = String(game.dealer.currentHand.cards.first!.integerRank)
         } else {
             dealerTotalLabel.text = String(game.dealer.currentHand.total)
         }

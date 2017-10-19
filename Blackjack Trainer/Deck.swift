@@ -16,15 +16,13 @@ class Deck
     let validSuits = ["hearts", "diamonds", "spades", "clubs"]
     let validRanks = ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"]
     
-    init(withCards: Bool) {
-        if withCards {
-            for rank in validRanks {
-                for suit in validSuits {
-                    let newCard = Card()
-                    newCard.rank = rank
-                    newCard.suit = suit
-                    cards.append(newCard)
-                }
+    init() {
+        for rank in validRanks {
+            for suit in validSuits {
+                let newCard = Card()
+                newCard.rank = rank
+                newCard.suit = suit
+                cards.append(newCard)
             }
         }
     }
