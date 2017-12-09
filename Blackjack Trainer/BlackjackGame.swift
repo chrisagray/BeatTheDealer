@@ -128,7 +128,6 @@ class BlackjackGame
         let topCardRank = topCard.integerRank
         
         hand.cards.append(topCard)
-//        updateHandTotal(cardRank: topCardRank, hand: hand)
         hand.updateTotal(cardRank: topCardRank)
         if faceUp {
             updateCount(rank: topCardRank)

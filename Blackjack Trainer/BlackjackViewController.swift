@@ -58,6 +58,7 @@ class BlackjackViewController: UIViewController {
     private var aces = false
     private var dealerHitsOnSoft17 = false
     private var hitCardDistance: CGFloat = 0
+    private var designConfigured = false
     
     private var game = BlackjackGame()
     
@@ -84,14 +85,17 @@ class BlackjackViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        configureUIDesign()
+        if !designConfigured {
+            configureUIDesign()
+            designConfigured = true
+        }
         hitCardDistance = dealerCards.last!.frame.minX - dealerCards.first!.frame.minX
     }
-    
+
     private func configureConstants() {
         let screenSize = UIScreen.main.bounds
         cardWidthConstraint.constant = screenSize.width * 0.25
-        cardHeightConstraint.constant = screenSize.height * 0.20
+        cardHeightConstraint.constant = screenSize.height * 0.2
         cardSpacingConstraint.constant = -0.20*screenSize.width
     }
     
@@ -100,8 +104,9 @@ class BlackjackViewController: UIViewController {
         var correctPlayLabelFont: CGFloat = 24
         var countLabelFont: CGFloat = 20
         var actionButtonsFont: CGFloat = 18
+        
         let iPhoneHeight = UIScreen.main.bounds.height
-        if iPhoneHeight == 667 { //iPhone 7
+        if iPhoneHeight == 667 { //iPhone 8
             titleLabelFont = 22
             correctPlayLabelFont = 20
             countLabelFont = 18
@@ -164,9 +169,10 @@ class BlackjackViewController: UIViewController {
         case game.hit.rawValue:
             gamblerHits()
         case game.stand.rawValue:
-            gamblerStands()
+            noMoreActions()
         case game.double.rawValue:
-            gamblerDoubles()
+            hitToPlayer()
+            noMoreActions()
         case game.split.rawValue:
             gamblerSplits()
         default:
@@ -179,23 +185,12 @@ class BlackjackViewController: UIViewController {
         changeButtonState(button: actionButtons[2], enabled: false)
         changeButtonState(button: actionButtons[3], enabled: false)
         hitToPlayer()
-        if !game.gambler.lastHand && gamblerHas21OrBusts {
-            splitHandStandsOrBusts()
-        } else if gamblerHas21OrBusts {
-            switchPlayToDealer()
+        if gamblerHas21OrBusts {
+            noMoreActions()
         }
     }
     
-    private func gamblerStands() {
-        if game.gambler.lastHand {
-            switchPlayToDealer()
-        } else {
-            splitHandStandsOrBusts()
-        }
-    }
-    
-    private func gamblerDoubles() {
-        hitToPlayer()
+    private func noMoreActions() {
         if game.gambler.lastHand {
             switchPlayToDealer()
         } else {
@@ -213,8 +208,8 @@ class BlackjackViewController: UIViewController {
         game.splitHand()
         hitToPlayer()
         moveCircleToCurrentHand()
-        if aces || gamblerHas21OrBusts {
-            splitHandStandsOrBusts()
+        if aces || game.gambler.currentHand.total == 21 { //don't want to use gamblerHas21OrBusts here
+            noMoreActions()
         }
     }
     
