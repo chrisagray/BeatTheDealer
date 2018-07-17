@@ -14,28 +14,17 @@ protocol LastHandDelegate: class {
 
 class BlackjackGame
 {
-    private var twentyFivePercentOfShoe: Int {
-        if numberOfDecks > 1 {
-            return Int(Double(numberOfDecks) * 52 * 0.25)
-        } else {
-            return 25 //arbitrary number, but reshuffling shoe below if this gets to 0
-        }
-    }
-    private var numberOfDecks = 6
-    
-    let hit = GamblerAction.hit
-    let stand = GamblerAction.stand
-    let double = GamblerAction.double
-    let split = GamblerAction.split
-    
-    let standAction = GamblerAction.stand
+    private var numberOfDecks = 6 //don't think this should be in BlackjackGame
     
     var gambler = Player()
     var dealer = Player()
     
     private var shoe = Shoe(numberOfDecks: 6) //6 is the default value
     
-    var currentPlayer = Player()
+    var currentPlayer: Player {
+        return gamblersTurn ? gambler : dealer
+    }
+    var gamblersTurn = true
     var count = 0
     var handsPlayed = 0
     var handsGamblerWon = 0
@@ -49,16 +38,9 @@ class BlackjackGame
         }
     }
     
-    private var basicStrategy = BasicStrategy()
+    var chips = 0
     
     weak var delegate: LastHandDelegate?
-    
-//    enum GamblerAction: String {
-//        case hit = "Hit"
-//        case stand = "Stand"
-//        case double = "Double"
-//        case split = "Split"
-//    }
     
     func changeNumberOfDecks(number: Int) {
         numberOfDecks = number
@@ -73,13 +55,15 @@ class BlackjackGame
         gambler = Player()
         dealer = Player()
         if lastHandBeforeShuffle {
+            print("shuffling shoe")
             reshuffleShoe()
         }
-        if shoe.cards.count <= twentyFivePercentOfShoe { //reshuffle shoe once it runs low
+        if shoe.cardCount <= shoe.twentyFivePercent { //reshuffle shoe once it runs low
             lastHandBeforeShuffle = true
+            print("didReceiveHandUpdate first")
             delegate?.didReceiveHandUpdate()
         }
-        currentPlayer = gambler
+        gamblersTurn = true
     }
     
     func countHandsWon() -> Int {
@@ -93,26 +77,41 @@ class BlackjackGame
                 case 17...20:
                     if hand.total > dealer.currentHand.total {
                         winCount += 1
+                        if hand.blackjack {
+                            chips += Int(Double(hand.bet)*1.5)
+                        } else {
+                            chips += hand.bet
+                        }
                     } else if hand.total < dealer.currentHand.total {
                         loseCount += 1
+                        chips -= hand.bet
                     }
                 case 21:
                     if hand.total != 21 {
                         loseCount += 1
+                        chips -= hand.bet
                     } else {
                         if hand.blackjack && !dealer.currentHand.blackjack {
                             winCount += 1
+                            chips += Int(Double(hand.bet)*1.5)
                         } else if !hand.blackjack && dealer.currentHand.blackjack {
                             loseCount += 1
+                            chips -= hand.bet
                         } else {
                             break
                         }
                     }
                 default: // >21
                     winCount += 1
+                    if hand.blackjack {
+                        chips += Int(Double(hand.bet)*1.5)
+                    } else {
+                        chips += hand.bet
+                    }
                 }
             } else {
                 loseCount += 1
+                chips -= hand.bet
             }
         }
         handsGamblerWon += winCount
@@ -120,30 +119,25 @@ class BlackjackGame
     }
     
     func dealTopCard(to hand: Hand, faceUp: Bool) {
-        if shoe.cards.first == nil { //although this shouldn't happen
-            reshuffleShoe()
+        if shoe.decks.first!.cards.isEmpty {
+            shoe.decks.removeFirst()
         }
         
-        let topCard = shoe.dealTopCard()
+        let topCard = shoe.decks.first!.draw()!
         let topCardRank = topCard.integerRank
+        hand.add(card: topCard)
         
-        hand.cards.append(topCard)
-        hand.updateTotal(cardRank: topCardRank)
         if faceUp {
             updateCount(rank: topCardRank)
         }
     }
     
-    func gamblerCanSplit() -> Bool {
+    var gamblerCanSplit: Bool {
         return gambler.currentHand.cards.first!.integerRank == gambler.currentHand.cards.last!.integerRank
     }
     
     func checkForBlackjack() -> Bool {
-        if gambler.currentHand.blackjack || dealer.currentHand.blackjack {
-            return true
-        } else {
-            return false
-        }
+        return gambler.currentHand.blackjack || dealer.currentHand.blackjack
     }
     
     func splitHand() {
@@ -192,9 +186,9 @@ class BlackjackGame
         if gambler.currentHand.cards.count == 2 {
             let gamblerFirstCardRank = gambler.currentHand.cards.first!.integerRank
             let gamblerSecondCardRank = gambler.currentHand.cards.last!.integerRank
-            return basicStrategy.twoCards(firstRank: gamblerFirstCardRank, secondRank: gamblerSecondCardRank, dealerRank: dealerFirstCardRank, soft: gambler.currentHand.soft, alreadySplit: gambler.alreadySplit)
+            return BasicStrategy.twoCards(firstRank: gamblerFirstCardRank, secondRank: gamblerSecondCardRank, dealerRank: dealerFirstCardRank, soft: gambler.currentHand.soft, alreadySplit: gambler.alreadySplit)
         } else {
-            return basicStrategy.threeOrMoreCards(total: gambler.currentHand.total, soft: gambler.currentHand.soft, dealerRank: dealerFirstCardRank)
+            return BasicStrategy.threeOrMoreCards(total: gambler.currentHand.total, soft: gambler.currentHand.soft, dealerRank: dealerFirstCardRank)
         }
     }
 }

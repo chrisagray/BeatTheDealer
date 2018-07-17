@@ -1,0 +1,66 @@
+Game:
+
+private func updateTotal(cardRank: Int) {
+        switch cardRank {
+        case 11:
+            switch soft {
+            case true:
+                total += 1
+            case false:
+                soft = true
+                total += 11
+                if total > 21 {
+                    total -= 10
+                }
+            }
+        default:
+            total += cardRank
+            if soft {
+                if total > 21 {
+                    total -= 10
+                    soft = false
+                }
+            }
+        }
+    }
+
+
+
+Hand:
+
+func add(card: Card) {
+        cards.append(card)
+        updateTotal(cardRank: card.integerRank)
+    }
+
+var bust: Bool {
+        return currentHand.total > 21
+    }
+
+
+
+Shoe:
+
+init(numberOfDecks: Int) {
+        for _ in 0..<numberOfDecks {
+            let newDeck = Deck()
+            newDeck.shuffle()
+            cards.append(contentsOf: newDeck.cards)
+        }
+    }
+
+
+
+Deck:
+
+
+init() {
+        for rank in validRanks {
+            for suit in validSuits {
+                let newCard = Card()
+                newCard.rank = rank
+                newCard.suit = suit
+                cards.append(newCard)
+            }
+        }
+    }

@@ -8,10 +8,10 @@
 
 import Foundation
 
-class BasicStrategy
+struct BasicStrategy
 {
     //Aces will be passed in as 11
-    func threeOrMoreCards(total: Int, soft: Bool, dealerRank: Int) -> GamblerAction {
+    static func threeOrMoreCards(total: Int, soft: Bool, dealerRank: Int) -> GamblerAction {
         switch soft {
         case false:
             switch total {
@@ -52,7 +52,7 @@ class BasicStrategy
     }
     
     //Aces will be passed in as 11
-    func twoCards(firstRank: Int, secondRank: Int, dealerRank: Int, soft: Bool, alreadySplit: Bool) -> GamblerAction {
+    static func twoCards(firstRank: Int, secondRank: Int, dealerRank: Int, soft: Bool, alreadySplit: Bool) -> GamblerAction {
         if firstRank == secondRank && !alreadySplit { //pairs
             switch firstRank {
             case 10:

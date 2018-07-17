@@ -10,17 +10,35 @@ import Foundation
 
 class Shoe
 {
-    var cards = [Card]()
+    var numberOfDecks = 0 //make only one variable - also in BlackjackGame
+    
+    var decks = [Deck]()
+    
+    var cardCount: Int {
+        var count = 0
+        for deck in decks {
+            count += deck.cards.count
+        }
+        return count
+    }
+    
+    var totalCards: Int {
+        return decks.count * 52
+    }
+    
+    var twentyFivePercent: Int {
+        return Int(Double(numberOfDecks) * 52 * 0.25)
+    }
     
     init(numberOfDecks: Int) {
+        self.numberOfDecks = numberOfDecks
         for _ in 0..<numberOfDecks {
-            let newDeck = Deck()
-            newDeck.shuffle()
-            cards.append(contentsOf: newDeck.cards)
+            decks.append(Deck())
         }
     }
     
-    func dealTopCard() -> Card {
-        return cards.removeFirst()
-    }
+    //want this method here or in Deck?
+//    func dealTopCard() -> Card {
+//        return cards.removeFirst()
+//    }
 }

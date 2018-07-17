@@ -11,24 +11,22 @@ import GameplayKit
 
 class Deck
 {
-    var cards = [Card]()
-    
-    let validSuits = ["hearts", "diamonds", "spades", "clubs"]
-    let validRanks = ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"]
+    private(set) var cards = [Card]()
     
     init() {
-        for rank in validRanks {
-            for suit in validSuits {
-                let newCard = Card()
-                newCard.rank = rank
-                newCard.suit = suit
-                cards.append(newCard)
+        for rank in Card.validRanks {
+            for suit in Card.validSuits {
+                cards.append(Card(rank: rank, suit: suit))
             }
         }
+        shuffle()
+    }
+    
+    func draw() -> Card? {
+        return cards.removeFirst()
     }
     
     func shuffle() {
-        let newDeck = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: cards) as! [Card]
-        cards = newDeck
+        cards = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: cards) as! [Card]
     }
 }

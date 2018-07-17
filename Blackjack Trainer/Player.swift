@@ -10,8 +10,8 @@ import Foundation
 
 class Player
 {
-    private var hand = Hand()
-    var hands = [Hand]()
+//    private var hand = Hand()
+    var hands = [Hand()]
     private var currentHandIndex = 0
     
     var currentHand: Hand {
@@ -22,10 +22,6 @@ class Player
     
     var lastHand: Bool {
         return currentHandIndex == 0
-    }
-    
-    init() {
-        hands.append(hand)
     }
     
     func splitHand() {

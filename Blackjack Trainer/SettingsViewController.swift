@@ -106,6 +106,7 @@ class SettingsViewController: UIViewController
         numberOfDecksLabel.text = String(roundedValue)
     }
     
+    //should probably make objects in .post be self
     
     @IBAction func changeCountState(_ sender: UISwitch) {
         NotificationCenter.default.post(name: NSNotification.Name("showOrHideCount"), object: nil)

@@ -8,10 +8,13 @@
 
 import Foundation
 
-class Card
+struct Card
 {
     var rank = String()
     var suit = String()
+    
+    static let validSuits = ["hearts", "diamonds", "spades", "clubs"]
+    static let validRanks = ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"]
     
     var integerRank: Int {
         switch rank {

@@ -16,12 +16,16 @@
 		83062F2A1E845D5C00A0D120 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83062F291E845D5C00A0D120 /* Card.swift */; };
 		83062F2C1E845F9100A0D120 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83062F2B1E845F9100A0D120 /* Deck.swift */; };
 		830F1CBC1EB52255004FDA16 /* Shoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830F1CBB1EB52255004FDA16 /* Shoe.swift */; };
+		8321947D200040F700260726 /* Gambler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8321947C200040F700260726 /* Gambler.swift */; };
+		8321947F2000410300260726 /* Dealer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8321947E2000410300260726 /* Dealer.swift */; };
 		834320FA1E9BFFB600153F12 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834320F91E9BFFB600153F12 /* Player.swift */; };
 		836959A21EC692D500B8184D /* BasicStrategyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836959A11EC692D500B8184D /* BasicStrategyViewController.swift */; };
 		838B28F11EAE7EAB0069077D /* Hand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B28F01EAE7EAB0069077D /* Hand.swift */; };
 		83A0A0751F64BD8600530841 /* BasicStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A0A0741F64BCE300530841 /* BasicStrategy.swift */; };
 		83A0A0771F64BDA500530841 /* GamblerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A0A0761F64BDA200530841 /* GamblerAction.swift */; };
 		83F60F881EB16BEF00EE1767 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F60F871EB16BEF00EE1767 /* SettingsViewController.swift */; };
+		83F8311A1FF6E742003351E1 /* CardImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F831191FF6E742003351E1 /* CardImageView.swift */; };
+		83F831201FF6EEE1003351E1 /* UIDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F8311F1FF6EEE1003351E1 /* UIDesign.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,12 +40,16 @@
 		83062F291E845D5C00A0D120 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		83062F2B1E845F9100A0D120 /* Deck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		830F1CBB1EB52255004FDA16 /* Shoe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shoe.swift; sourceTree = "<group>"; };
+		8321947C200040F700260726 /* Gambler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gambler.swift; sourceTree = "<group>"; };
+		8321947E2000410300260726 /* Dealer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dealer.swift; sourceTree = "<group>"; };
 		834320F91E9BFFB600153F12 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		836959A11EC692D500B8184D /* BasicStrategyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicStrategyViewController.swift; sourceTree = "<group>"; };
 		838B28F01EAE7EAB0069077D /* Hand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hand.swift; sourceTree = "<group>"; };
 		83A0A0741F64BCE300530841 /* BasicStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicStrategy.swift; sourceTree = "<group>"; };
 		83A0A0761F64BDA200530841 /* GamblerAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamblerAction.swift; sourceTree = "<group>"; };
 		83F60F871EB16BEF00EE1767 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		83F831191FF6E742003351E1 /* CardImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardImageView.swift; sourceTree = "<group>"; };
+		83F8311F1FF6EEE1003351E1 /* UIDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDesign.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +86,8 @@
 				836959A11EC692D500B8184D /* BasicStrategyViewController.swift */,
 				83F60F871EB16BEF00EE1767 /* SettingsViewController.swift */,
 				83062F141E845B4D00A0D120 /* BlackjackViewController.swift */,
+				83F831191FF6E742003351E1 /* CardImageView.swift */,
+				83F8311F1FF6EEE1003351E1 /* UIDesign.swift */,
 				832B1CAE1E8AEF0D00887A79 /* Model */,
 				83062F241E845B7900A0D120 /* Supporting Files */,
 			);
@@ -105,6 +115,8 @@
 				83062F251E845BB700A0D120 /* BlackjackGame.swift */,
 				838B28F01EAE7EAB0069077D /* Hand.swift */,
 				834320F91E9BFFB600153F12 /* Player.swift */,
+				8321947C200040F700260726 /* Gambler.swift */,
+				8321947E2000410300260726 /* Dealer.swift */,
 				83A0A0741F64BCE300530841 /* BasicStrategy.swift */,
 				83A0A0761F64BDA200530841 /* GamblerAction.swift */,
 			);
@@ -138,7 +150,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Chris Gray";
 				TargetAttributes = {
 					83062F0E1E845B4D00A0D120 = {
@@ -189,12 +201,16 @@
 				83A0A0751F64BD8600530841 /* BasicStrategy.swift in Sources */,
 				83062F151E845B4D00A0D120 /* BlackjackViewController.swift in Sources */,
 				836959A21EC692D500B8184D /* BasicStrategyViewController.swift in Sources */,
+				8321947F2000410300260726 /* Dealer.swift in Sources */,
 				83062F2A1E845D5C00A0D120 /* Card.swift in Sources */,
 				83062F131E845B4D00A0D120 /* AppDelegate.swift in Sources */,
 				830F1CBC1EB52255004FDA16 /* Shoe.swift in Sources */,
 				838B28F11EAE7EAB0069077D /* Hand.swift in Sources */,
 				834320FA1E9BFFB600153F12 /* Player.swift in Sources */,
+				83F831201FF6EEE1003351E1 /* UIDesign.swift in Sources */,
 				83062F261E845BB700A0D120 /* BlackjackGame.swift in Sources */,
+				83F8311A1FF6E742003351E1 /* CardImageView.swift in Sources */,
+				8321947D200040F700260726 /* Gambler.swift in Sources */,
 				83A0A0771F64BDA500530841 /* GamblerAction.swift in Sources */,
 				83F60F881EB16BEF00EE1767 /* SettingsViewController.swift in Sources */,
 			);
@@ -235,6 +251,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -242,6 +259,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -268,7 +286,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -290,6 +308,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -297,6 +316,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -317,7 +337,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -331,7 +351,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = U4DJ6DJJEN;
 				INFOPLIST_FILE = "Blackjack Trainer/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "chrisgray.Beat-the-Dealer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -347,7 +367,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = U4DJ6DJJEN;
 				INFOPLIST_FILE = "Blackjack Trainer/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "chrisgray.Beat-the-Dealer";
 				PRODUCT_NAME = "$(TARGET_NAME)";

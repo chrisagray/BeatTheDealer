@@ -10,6 +10,7 @@ import Foundation
 
 class Hand
 {
+    
     var soft = false
     var total = 0
     var cards = [Card]()
@@ -19,6 +20,8 @@ class Hand
     var bust: Bool {
         return total > 21
     }
+    
+    var bet = 10
     
     func add(card: Card) {
         cards.append(card)

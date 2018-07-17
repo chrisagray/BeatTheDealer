@@ -8,8 +8,7 @@
 
 import Foundation
 
-enum GamblerAction: String
-{
+enum GamblerAction: String {
     case hit = "Hit"
     case stand = "Stand"
     case double = "Double"
