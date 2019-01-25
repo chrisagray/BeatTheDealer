@@ -80,8 +80,11 @@ class BlackjackViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(showOrHideCount), name: NSNotification.Name("showOrHideCount"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(changeDealerHitsOnSoft17), name: NSNotification.Name("changeDealerHitsOnSoft17"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(changeNumberOfDecks(_:)), name: NSNotification.Name("changeNumberOfDecks"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(changeShowTotals), name: NSNotification.Name("changeShowTotals"), object: nil)
         countLabel.isHidden = !UserDefaults.standard.bool(forKey: "showCountState")
         dealerHitsOnSoft17 = UserDefaults.standard.bool(forKey: "dealerHitsState")
+        dealerTotalLabel.isHidden = !UserDefaults.standard.bool(forKey: "showTotalsState")
+        gamblerTotalLabel.isHidden = !UserDefaults.standard.bool(forKey: "showTotalsState")
         game.delegate = self as LastHandDelegate
         configureFonts()
         configureConstants()
@@ -173,6 +176,14 @@ class BlackjackViewController: UIViewController {
         dealerHitsOnSoft17 = !dealerHitsOnSoft17
     }
     
+    @objc func changeShowTotals() {
+        dealerTotalLabel.isHidden = !UserDefaults.standard.bool(forKey: "showTotalsState")
+        gamblerTotalLabel.isHidden = !UserDefaults.standard.bool(forKey: "showTotalsState")
+        if view.subviews.contains(splitHandTotalLabel) {
+            splitHandTotalLabel.isHidden = !UserDefaults.standard.bool(forKey: "showTotalsState")
+        }
+    }
+    
     @objc func changeNumberOfDecks(_ notification: NSNotification) {
         if let number = notification.userInfo?["number"] as? Int {
             game.changeNumberOfDecks(number: number)
@@ -260,7 +271,9 @@ class BlackjackViewController: UIViewController {
         if !actionButtons[2].isEnabled {
             changeButtonState(button: actionButtons[2], enabled: true)
         }
-        gamblerTotalLabel.isHidden = false
+        if UserDefaults.standard.bool(forKey: "showTotalsState") {
+            gamblerTotalLabel.isHidden = false
+        }
         numberOfCardsHitToPlayer = 0
         previousCard = gamblerCards.first!
         game.splitHandStandsOrBusts()
@@ -277,6 +290,9 @@ class BlackjackViewController: UIViewController {
         splitHandTotalLabel.font = UIFont.systemFont(ofSize: gamblerTotalLabel.font.pointSize)
         splitHandTotalLabel.textAlignment = .center
         view.addSubview(splitHandTotalLabel)
+        if !UserDefaults.standard.bool(forKey: "showTotalsState") {
+            splitHandTotalLabel.isHidden = true
+        }
         gamblerTotalLabel.isHidden = true
     }
     
@@ -357,6 +373,7 @@ class BlackjackViewController: UIViewController {
     
     private func putNewCardOnTable(card: Card, cardFrame: CGRect) {
         let newCardImageView = UIImageView()
+        newCardImageView.contentMode = .scaleAspectFit
         updateCardImage(cardImageView: newCardImageView, card: card)
         newCardImageView.frame.origin = CGPoint(x: view.frame.width, y: view.frame.origin.y)
         view.addSubview(newCardImageView)

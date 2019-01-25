@@ -13,6 +13,7 @@ class SettingsViewController: UIViewController
     @IBOutlet weak var showCountLabel: UILabel!
     @IBOutlet weak var showCountSwitch: UISwitch!
     @IBOutlet weak var dealerHitsSwitch: UISwitch!
+    @IBOutlet weak var showTotalsSwitch: UISwitch!
     
     @IBOutlet weak var handsPlayedLabel: UILabel!
     @IBOutlet weak var handsWonLabel: UILabel!
@@ -57,6 +58,7 @@ class SettingsViewController: UIViewController
         super.viewDidLoad()
         showCountSwitch.isOn = UserDefaults.standard.bool(forKey: "showCountState")
         dealerHitsSwitch.isOn = UserDefaults.standard.bool(forKey: "dealerHitsState")
+        showTotalsSwitch.isOn = UserDefaults.standard.bool(forKey: "showTotalsState")
         setTextForLabels()
         numberOfDecksSlider.setValue(Float(previousSliderValue), animated: false)
         numberOfDecksLabel.text = String(previousSliderValue)
@@ -117,4 +119,10 @@ class SettingsViewController: UIViewController
         NotificationCenter.default.post(name: NSNotification.Name("changeDealerHitsOnSoft17"), object: nil)
         UserDefaults.standard.set(sender.isOn, forKey: "dealerHitsState")
     }
+    
+    @IBAction func changeShowTotalsState(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: "showTotalsState")
+        NotificationCenter.default.post(name: NSNotification.Name("changeShowTotals"), object: nil)
+    }
+    
 }
